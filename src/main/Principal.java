@@ -6,16 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -38,29 +34,30 @@ import java.awt.Toolkit;
 public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblJogador;
-	private JTable tblAldeoes;
-	private DefaultTableModel tmAldeoes;
-	private JComboBox<String> cbFazenda;
-	private JComboBox<String> cbMinaOuro;
-	private JTable tblFazendas;
-	private DefaultTableModel tmFazendas;
-	private JTable tblMinasOuro;
-	private DefaultTableModel tmMinasOuro;
-	private JLabel lblComida;
-	private JLabel lblOuro;
-	private JTextField tfPrefeitura;
-	private JPanel pnTemplo;
-	private JPanel pnOferenda;
-	private JLabel lblOferenda;
-	private JTextField tfTemplo;
-	private JComboBox<String> cbTEmploEvolucoes;
-	private JButton btnTemploEvoluir;
-	private JComboBox<String> cbTemploLancamentos;
-	private JComboBox<String> cbTemploInimigo;
-	private JButton btnTemploLancar;
-	private JPanel pnMaravilha;
-	private JLabel lblMaravilha;
-	private JProgressBar pbMaravilha;
+	static JTable tblAldeoes;
+	static DefaultTableModel tmAldeoes;
+	static JComboBox<String> cbFazenda;
+	static JComboBox<String> cbMinaOuro;
+	static JTable tblFazendas;
+	static DefaultTableModel tmFazendas;
+	static JTable tblMinasOuro;
+	static DefaultTableModel tmMinasOuro;
+	static JLabel lblComida;
+	static JLabel lblOuro;
+	static JTextField tfPrefeitura;
+	static JPanel pnTemplo;
+	static JPanel pnOferenda;
+	static JLabel lblOferenda;
+	static JTextField tfTemplo;
+	static JComboBox<String> cbTEmploEvolucoes;
+	static JButton btnTemploEvoluir;
+	static JComboBox<String> cbTemploLancamentos;
+	static JComboBox<String> cbTemploInimigo;
+	static JButton btnTemploLancar;
+	static JPanel pnMaravilha;
+	static JLabel lblMaravilha;
+	static JProgressBar pbMaravilha;
+	
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
@@ -72,11 +69,12 @@ public class Principal extends JFrame {
 	public Principal() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/img/icone.png")));
         initialize();
-        iniciarVila();
+        IniciarVila.iniciarVila();
 		try {
-	        String nome = View.inserirNome();
-	        String civilizacao = View.civilizacao();
-	        this.lblJogador.setText(nome +" - "+ civilizacao);
+			//String nome = View.inserirNome();
+			//String civilizacao = View.civilizacao();
+	        //Principal.lblJogador.setText(nome +" - "+ civilizacao);
+			this.lblJogador.setText("A" +" - "+ "TEST");
 		} catch (Exception e) {
 			View.exibirMensagem(e.getMessage());
 		}
@@ -89,7 +87,7 @@ public class Principal extends JFrame {
 		this.setTitle("Jogo de Estratégia em Tempo Real");
 		this.setResizable(false);
 		this.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		this.setBounds(100, 100, 886, 720);
+		this.setBounds(50, 50, 886, 720);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 
@@ -101,20 +99,29 @@ public class Principal extends JFrame {
 		DefaultTableCellRenderer dtcrAldeaoAcao = new DefaultTableCellRenderer() {
 			public void setValue(Object valor) {
 				String v=valor.toString();
-				if (v.equals("parado"))
-					setBackground(Color.WHITE);
-				else if (v.equals("orando"))
-					setBackground(new Color(135, 206, 235));
-				else if (v.equals("sacrificado"))
-					setBackground(Color.RED);
-				else if (v.contains("cultivando"))
-					setBackground(Color.GREEN);
-				else if (v.contains("minerando"))
-					setBackground(Color.YELLOW);
-				else if (v.contains("construindo"))
-					setBackground(Color.LIGHT_GRAY);
-				else
-					setBackground(Color.BLACK);
+				switch (v) {							//Status do Aldeao e sua respetiva cor
+					case "Pronto":
+						setBackground(Color.GREEN);
+						break;
+					case "orando":
+						setBackground(new Color(135, 206, 235));
+						break;
+					case "sacrificado":
+						setBackground(Color.RED);
+						break;
+					case "cultivando":
+						setBackground(Color.GREEN);
+						break;
+					case "minerando":
+						setBackground(Color.YELLOW);
+						break;
+					case "construindo":
+						setBackground(Color.LIGHT_GRAY);
+						break;
+					default:
+						setBackground(Color.BLACK);
+						break;
+				}
 				super.setValue(valor);
 			}
 		};
@@ -149,23 +156,25 @@ public class Principal extends JFrame {
 		pnTP_Vila.add(pnAldeao);
 
 		String[] colunasAldeoes = {"Nó", "Ação"};
-		this.tmAldeoes = (new DefaultTableModel(null, colunasAldeoes){
-			public boolean isCellEditable(int row, int column){
-				return false;
+		Principal.tmAldeoes = (
+			new DefaultTableModel(null, colunasAldeoes){
+				public boolean isCellEditable(int row, int column){
+					return false;
+				}
 			}
-		});
+		);
 
-		this.tblAldeoes = new JTable(this.tmAldeoes);
-		this.tblAldeoes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		this.tblAldeoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.tblAldeoes.getColumn("Ação").setCellRenderer(dtcrAldeaoAcao);
-		this.tblAldeoes.getColumnModel().getColumn(0).setResizable(false);
-		this.tblAldeoes.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
-		this.tblAldeoes.getColumnModel().getColumn(0).setPreferredWidth(30);
-		this.tblAldeoes.getColumnModel().getColumn(1).setResizable(false);
-		this.tblAldeoes.getColumnModel().getColumn(1).setPreferredWidth(202);
+		Principal.tblAldeoes = new JTable(Principal.tmAldeoes);
+		Principal.tblAldeoes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		Principal.tblAldeoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		Principal.tblAldeoes.getColumn("Ação").setCellRenderer(dtcrAldeaoAcao);
+		Principal.tblAldeoes.getColumnModel().getColumn(0).setResizable(false);
+		Principal.tblAldeoes.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
+		Principal.tblAldeoes.getColumnModel().getColumn(0).setPreferredWidth(30);
+		Principal.tblAldeoes.getColumnModel().getColumn(1).setResizable(false);
+		Principal.tblAldeoes.getColumnModel().getColumn(1).setPreferredWidth(202);
 
-		JScrollPane spAldeoes = new JScrollPane(this.tblAldeoes);
+		JScrollPane spAldeoes = new JScrollPane(Principal.tblAldeoes);
 		spAldeoes.setBounds(10, 20, 250, 460);
 		spAldeoes.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnAldeao.add(spAldeoes);
@@ -190,7 +199,7 @@ public class Principal extends JFrame {
 		btnAldeaoCultivar.setBounds(10, 535, 120, 21);
 		pnAldeao.add(btnAldeaoCultivar);
 
-		this.cbFazenda = new JComboBox<String>();
+		Principal.cbFazenda = new JComboBox<String>();
 		cbFazenda.setBounds(140, 535, 119, 21);
 		pnAldeao.add(cbFazenda);
 
@@ -198,7 +207,7 @@ public class Principal extends JFrame {
 		btnAldeaoMinerar.setBounds(10, 560, 120, 21);
 		pnAldeao.add(btnAldeaoMinerar);
 
-		this.cbMinaOuro = new JComboBox<String>();
+		Principal.cbMinaOuro = new JComboBox<String>();
 		cbMinaOuro.setBounds(140, 560, 119, 21);
 		pnAldeao.add(cbMinaOuro);
 
@@ -217,22 +226,22 @@ public class Principal extends JFrame {
 		pnTP_Vila.add(pnFazenda);
 
 		String[] colunasFazendas = {"N�", "Alde�es"};
-		this.tmFazendas = (new DefaultTableModel(null, colunasFazendas){
+		Principal.tmFazendas = (new DefaultTableModel(null, colunasFazendas){
 			public boolean isCellEditable(int row, int column){
 				return false;
 			}
 		});
 
-		this.tblFazendas = new JTable(this.tmFazendas);
-		this.tblFazendas.setRowSelectionAllowed(false);
-		this.tblFazendas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		this.tblFazendas.getColumnModel().getColumn(0).setResizable(false);
-		this.tblFazendas.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
-		this.tblFazendas.getColumnModel().getColumn(0).setPreferredWidth(30);
-		this.tblFazendas.getColumnModel().getColumn(1).setResizable(false);
-		this.tblFazendas.getColumnModel().getColumn(1).setPreferredWidth(202);
+		Principal.tblFazendas = new JTable(Principal.tmFazendas);
+		Principal.tblFazendas.setRowSelectionAllowed(false);
+		Principal.tblFazendas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		Principal.tblFazendas.getColumnModel().getColumn(0).setResizable(false);
+		Principal.tblFazendas.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
+		Principal.tblFazendas.getColumnModel().getColumn(0).setPreferredWidth(30);
+		Principal.tblFazendas.getColumnModel().getColumn(1).setResizable(false);
+		Principal.tblFazendas.getColumnModel().getColumn(1).setPreferredWidth(202);
 
-		JScrollPane spFazendas = new JScrollPane(this.tblFazendas);
+		JScrollPane spFazendas = new JScrollPane(Principal.tblFazendas);
 		spFazendas.setBounds(10, 20, 250, 275);
 		spFazendas.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnFazenda.add(spFazendas);
@@ -244,22 +253,22 @@ public class Principal extends JFrame {
 		pnTP_Vila.add(pnMinaOuro);
 
 		String[] colunasMinas = {"Nó�", "Aldeões"};
-		this.tmMinasOuro = (new DefaultTableModel(null, colunasMinas){
+		Principal.tmMinasOuro = (new DefaultTableModel(null, colunasMinas){
 			public boolean isCellEditable(int row, int column){
 				return false;
 			}
 		});		
 
-		this.tblMinasOuro = new JTable(this.tmMinasOuro);
-		this.tblMinasOuro.setRowSelectionAllowed(false);
-		this.tblMinasOuro.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		this.tblMinasOuro.getColumnModel().getColumn(0).setResizable(false);
-		this.tblMinasOuro.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
-		this.tblMinasOuro.getColumnModel().getColumn(0).setPreferredWidth(30);
-		this.tblMinasOuro.getColumnModel().getColumn(1).setResizable(false);
-		this.tblMinasOuro.getColumnModel().getColumn(1).setPreferredWidth(202);
+		Principal.tblMinasOuro = new JTable(Principal.tmMinasOuro);
+		Principal.tblMinasOuro.setRowSelectionAllowed(false);
+		Principal.tblMinasOuro.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		Principal.tblMinasOuro.getColumnModel().getColumn(0).setResizable(false);
+		Principal.tblMinasOuro.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
+		Principal.tblMinasOuro.getColumnModel().getColumn(0).setPreferredWidth(30);
+		Principal.tblMinasOuro.getColumnModel().getColumn(1).setResizable(false);
+		Principal.tblMinasOuro.getColumnModel().getColumn(1).setPreferredWidth(202);
 
-		JScrollPane spMinas = new JScrollPane(this.tblMinasOuro);
+		JScrollPane spMinas = new JScrollPane(Principal.tblMinasOuro);
 		spMinas.setBounds(10, 20, 250, 275);
 		spMinas.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnMinaOuro.add(spMinas);
@@ -276,9 +285,9 @@ public class Principal extends JFrame {
 		pnComida.setBounds(8, 15, 127, 45);
 		pnPrefeitura.add(pnComida);
 
-		this.lblComida = new JLabel("0");
-		this.lblComida.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		pnComida.add(this.lblComida);
+		Principal.lblComida = new JLabel("0");
+		Principal.lblComida.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pnComida.add(Principal.lblComida);
 
 		JPanel pnOuro = new JPanel();
 		((FlowLayout) pnOuro.getLayout()).setAlignment(FlowLayout.LEFT);
@@ -286,13 +295,13 @@ public class Principal extends JFrame {
 		pnOuro.setBounds(135, 15, 128, 45);
 		pnPrefeitura.add(pnOuro);
 
-		this.lblOuro = new JLabel("0");
-		this.lblOuro.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		pnOuro.add(this.lblOuro);
+		Principal.lblOuro = new JLabel("0");
+		Principal.lblOuro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pnOuro.add(Principal.lblOuro);
 
-		this.tfPrefeitura = new JTextField();
+		Principal.tfPrefeitura = new JTextField();
 		tfPrefeitura.setBounds(10, 65, 250, 20);
-		this.tfPrefeitura.setEditable(false);
+		Principal.tfPrefeitura.setEditable(false);
 		pnPrefeitura.add(tfPrefeitura);
 
 		JButton btnPrefeituraCriarAldeao = new JButton("Criar aldeão");
@@ -310,82 +319,82 @@ public class Principal extends JFrame {
 		btnPrefeituraEvoluir.setBounds(131, 140, 128, 21);
 		pnPrefeitura.add(btnPrefeituraEvoluir);
 
-		this.pnTemplo = new JPanel();
-		this.pnTemplo.setLayout(null);
-		this.pnTemplo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Templo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		this.pnTemplo.setBounds(570, 195, 270, 225);
-		this.pnTemplo.setEnabled(false);
-		pnTP_Vila.add(this.pnTemplo);
+		Principal.pnTemplo = new JPanel();
+		Principal.pnTemplo.setLayout(null);
+		Principal.pnTemplo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Templo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		Principal.pnTemplo.setBounds(570, 195, 270, 225);
+		Principal.pnTemplo.setEnabled(false);
+		pnTP_Vila.add(Principal.pnTemplo);
 
-		this.pnOferenda = new JPanel();
-		((FlowLayout) this.pnOferenda.getLayout()).setAlignment(FlowLayout.LEFT);
-		this.pnOferenda.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Oferendas de fã", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		this.pnOferenda.setBounds(8, 15, 255, 45);
-		this.pnOferenda.setEnabled(false);
-		this.pnTemplo.add(this.pnOferenda);
+		Principal.pnOferenda = new JPanel();
+		((FlowLayout) Principal.pnOferenda.getLayout()).setAlignment(FlowLayout.LEFT);
+		Principal.pnOferenda.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Oferendas de fã", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		Principal.pnOferenda.setBounds(8, 15, 255, 45);
+		Principal.pnOferenda.setEnabled(false);
+		Principal.pnTemplo.add(Principal.pnOferenda);
 
-		this.lblOferenda = new JLabel("0");
-		this.lblOferenda.setHorizontalAlignment(SwingConstants.LEFT);
-		this.lblOferenda.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		this.lblOferenda.setEnabled(false);
-		this.pnOferenda.add(this.lblOferenda);
+		Principal.lblOferenda = new JLabel("0");
+		Principal.lblOferenda.setHorizontalAlignment(SwingConstants.LEFT);
+		Principal.lblOferenda.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Principal.lblOferenda.setEnabled(false);
+		Principal.pnOferenda.add(Principal.lblOferenda);
 
-		this.tfTemplo = new JTextField();
-		this.tfTemplo.setEditable(false);
-		this.tfTemplo.setBounds(10, 65, 250, 20);
-		this.pnTemplo.add(this.tfTemplo);
+		Principal.tfTemplo = new JTextField();
+		Principal.tfTemplo.setEditable(false);
+		Principal.tfTemplo.setBounds(10, 65, 250, 20);
+		Principal.pnTemplo.add(Principal.tfTemplo);
 
-		this.cbTEmploEvolucoes = new JComboBox<String>();
-		this.cbTEmploEvolucoes.setBounds(10, 90, 248, 21);
-		this.cbTEmploEvolucoes.addItem("Nuvem de gafanhotos");
-		this.cbTEmploEvolucoes.addItem("Morte dos primogénitos");
-		this.cbTEmploEvolucoes.addItem("Chuva de pedras");
-		this.cbTEmploEvolucoes.addItem("Proteção contra nuvem de gafanhotos");
-		this.cbTEmploEvolucoes.addItem("Proteção contra morte dos primogénitos");
-		this.cbTEmploEvolucoes.addItem("Proteção contra chuva de pedras");
-		this.cbTEmploEvolucoes.setEnabled(false);
-		this.pnTemplo.add(this.cbTEmploEvolucoes);
+		Principal.cbTEmploEvolucoes = new JComboBox<String>();
+		Principal.cbTEmploEvolucoes.setBounds(10, 90, 248, 21);
+		Principal.cbTEmploEvolucoes.addItem("Nuvem de gafanhotos");
+		Principal.cbTEmploEvolucoes.addItem("Morte dos primogénitos");
+		Principal.cbTEmploEvolucoes.addItem("Chuva de pedras");
+		Principal.cbTEmploEvolucoes.addItem("Proteção contra nuvem de gafanhotos");
+		Principal.cbTEmploEvolucoes.addItem("Proteção contra morte dos primogénitos");
+		Principal.cbTEmploEvolucoes.addItem("Proteção contra chuva de pedras");
+		Principal.cbTEmploEvolucoes.setEnabled(false);
+		Principal.pnTemplo.add(Principal.cbTEmploEvolucoes);
 
-		this.btnTemploEvoluir = new JButton("Evoluir");
-		this.btnTemploEvoluir.setBounds(131, 115, 128, 21);
-		this.btnTemploEvoluir.setEnabled(false);
-		this.pnTemplo.add(this.btnTemploEvoluir);
+		Principal.btnTemploEvoluir = new JButton("Evoluir");
+		Principal.btnTemploEvoluir.setBounds(131, 115, 128, 21);
+		Principal.btnTemploEvoluir.setEnabled(false);
+		Principal.pnTemplo.add(Principal.btnTemploEvoluir);
 
-		this.cbTemploLancamentos = new JComboBox<String>();
-		this.cbTemploLancamentos.setBounds(10, 140, 248, 21);
-		this.cbTemploLancamentos.setEnabled(false);
-		this.pnTemplo.add(this.cbTemploLancamentos);
+		Principal.cbTemploLancamentos = new JComboBox<String>();
+		Principal.cbTemploLancamentos.setBounds(10, 140, 248, 21);
+		Principal.cbTemploLancamentos.setEnabled(false);
+		Principal.pnTemplo.add(Principal.cbTemploLancamentos);
 
-		this.cbTemploInimigo = new JComboBox<String>();
-		this.cbTemploInimigo.setEnabled(false);
-		this.cbTemploInimigo.setBounds(10, 165, 248, 21);
-		this.pnTemplo.add(this.cbTemploInimigo);
+		Principal.cbTemploInimigo = new JComboBox<String>();
+		Principal.cbTemploInimigo.setEnabled(false);
+		Principal.cbTemploInimigo.setBounds(10, 165, 248, 21);
+		Principal.pnTemplo.add(Principal.cbTemploInimigo);
 
-		this.btnTemploLancar = new JButton("Lançar");
-		this.btnTemploLancar.setBounds(131, 190, 128, 21);
-		this.btnTemploLancar.setEnabled(false);
-		this.pnTemplo.add(this.btnTemploLancar);
+		Principal.btnTemploLancar = new JButton("Lançar");
+		Principal.btnTemploLancar.setBounds(131, 190, 128, 21);
+		Principal.btnTemploLancar.setEnabled(false);
+		Principal.pnTemplo.add(Principal.btnTemploLancar);
 
-		this.pnMaravilha = new JPanel();
-		this.pnMaravilha.setLayout(null);
-		this.pnMaravilha.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Maravilha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		this.pnMaravilha.setBounds(570, 430, 270, 200);
-		this.pnMaravilha.setEnabled(false);
-		pnTP_Vila.add(this.pnMaravilha);
+		Principal.pnMaravilha = new JPanel();
+		Principal.pnMaravilha.setLayout(null);
+		Principal.pnMaravilha.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Maravilha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		Principal.pnMaravilha.setBounds(570, 430, 270, 200);
+		Principal.pnMaravilha.setEnabled(false);
+		pnTP_Vila.add(Principal.pnMaravilha);
 
-		this.lblMaravilha = new JLabel();
-		this.lblMaravilha.setBounds(10, 20, 215, 170);
-		this.lblMaravilha.setIcon(new ImageIcon(Principal.class.getResource("/img/maravilha.png")));
-		this.lblMaravilha.setEnabled(false);
-		this.pnMaravilha.add(this.lblMaravilha);
+		Principal.lblMaravilha = new JLabel();
+		Principal.lblMaravilha.setBounds(10, 20, 215, 170);
+		Principal.lblMaravilha.setIcon(new ImageIcon(Principal.class.getResource("/img/maravilha.png")));
+		Principal.lblMaravilha.setEnabled(false);
+		Principal.pnMaravilha.add(Principal.lblMaravilha);
 
-		this.pbMaravilha = new JProgressBar();
-		this.pbMaravilha.setOrientation(SwingConstants.VERTICAL);
-		this.pbMaravilha.setBounds(225, 20, 30, 170);
-		this.pbMaravilha.setMaximum(100000);
-		this.pbMaravilha.setStringPainted(true);
-		this.pbMaravilha.setEnabled(false);
-		this.pnMaravilha.add(pbMaravilha);
+		Principal.pbMaravilha = new JProgressBar();
+		Principal.pbMaravilha.setOrientation(SwingConstants.VERTICAL);
+		Principal.pbMaravilha.setBounds(225, 20, 30, 170);
+		Principal.pbMaravilha.setMaximum(100000);
+		Principal.pbMaravilha.setStringPainted(true);
+		Principal.pbMaravilha.setEnabled(false);
+		Principal.pnMaravilha.add(pbMaravilha);
 
 		tpJogo.setSelectedIndex(1);
 
@@ -393,249 +402,65 @@ public class Principal extends JFrame {
 
 		btnAldeaoParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoParar(tblAldeoes.getSelectedRow());
+				Comandos.comandoAldeaoParar(tblAldeoes.getSelectedRow());
 			}
 		});
 
 		btnAldeaoConstruir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoConstruir(tblAldeoes.getSelectedRow(), cbConstruir.getSelectedItem().toString());
+				Comandos.comandoAldeaoConstruir(tblAldeoes.getSelectedRow(), cbConstruir.getSelectedItem().toString());
 			}
 		});
 
 		btnAldeaoCultivar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoCultivar(tblAldeoes.getSelectedRow(), cbFazenda.getSelectedIndex());
+				Comandos.comandoAldeaoCultivar(tblAldeoes.getSelectedRow(), cbFazenda.getSelectedIndex());
 			}
 		});
 
 		btnAldeaoMinerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoMinerar(tblAldeoes.getSelectedRow(), cbMinaOuro.getSelectedIndex());
+				Comandos.comandoAldeaoMinerar(tblAldeoes.getSelectedRow(), cbMinaOuro.getSelectedIndex());
 			}
 		});
 
 		btnAldeaoOrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoOrar(tblAldeoes.getSelectedRow());
+				Comandos.comandoAldeaoOrar(tblAldeoes.getSelectedRow());
 			}
 		});
 
 		btnAldeaoSacrificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoAldeaoSacrificar(tblAldeoes.getSelectedRow());
+				Comandos.comandoAldeaoSacrificar(tblAldeoes.getSelectedRow());
 			}
 		});
 
 		btnPrefeituraCriarAldeao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoPrefeituraCriarAldeao();				
+				Comandos.comandoPrefeituraCriarAldeao(tmAldeoes.getRowCount()+1);				
 			}
 		});
 
 		btnPrefeituraEvoluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoPrefeituraEvoluir(cbPrefeituraEvolucoes.getSelectedItem().toString());
+				Comandos.comandoPrefeituraEvoluir(cbPrefeituraEvolucoes.getSelectedItem().toString());
 			}
 		});
 
 		btnTemploEvoluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoTemploEvoluir(cbTEmploEvolucoes.getSelectedItem().toString());
+				Comandos.comandoTemploEvoluir(cbTEmploEvolucoes.getSelectedItem().toString());
 			}
 		});
 
 		btnTemploLancar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comandoTemploLancar();
+				Comandos.comandoTemploLancar();
 			}
 		});
 
 	}
 
-	public void mostrarMensagemErro(String titulo, String mensagem) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void adicionarAldeao(String numero, String acao) {
-		String[] linha = {numero, acao};
-		this.tmAldeoes.addRow(linha);
-	}
-
-	public void mostrarAldeao(int aldeao, String acao) {
-		this.tblAldeoes.setValueAt(acao, aldeao-1, 1);
-	}
-
-	public void adicionarFazenda(String numero, String aldeoes) {
-		String[] linha = {numero, aldeoes};
-		this.tmFazendas.addRow(linha);
-		this.cbFazenda.addItem(numero);
-	}
-
-	public void mostrarFazenda(int fazenda, String aldeoes) {
-		this.tblFazendas.setValueAt(aldeoes, fazenda-1, 1);
-	}
-
-	public void mostrarComida(int qtd) {
-		this.lblComida.setText(NumberFormat.getNumberInstance().format(qtd));
-	}
-
-	public void adicionarMinaOuro(String numero, String aldeoes) {
-		String[] linha = {numero, aldeoes};
-		this.tmMinasOuro.addRow(linha);
-		this.cbMinaOuro.addItem(numero);
-	}
-
-	public void mostrarMinaOuro(int minaOuro, String aldeoes) {
-		this.tblMinasOuro.setValueAt(aldeoes, minaOuro-1, 1);
-	}
-
-	public void mostrarOuro(int qtd) {
-		this.lblOuro.setText(NumberFormat.getNumberInstance().format(qtd));
-	}
-
-	public void mostrarOferendaFe(int qtd) {
-		this.lblOferenda.setText(NumberFormat.getNumberInstance().format(qtd));
-	}
-
-	public void mostrarPrefeitura(String acao, Color cor) {
-		this.tfPrefeitura.setText(acao);
-		this.tfPrefeitura.setBackground(cor);
-	}
-
-	public void habilitarTemplo() {
-		this.pnTemplo.setEnabled(true);
-		this.pnOferenda.setEnabled(true);
-		this.lblOferenda.setEnabled(true);
-		this.cbTEmploEvolucoes.setEnabled(true);
-		this.btnTemploEvoluir.setEnabled(true);
-	}
-
-	public void habilitarMaravilha() {
-		this.pnMaravilha.setEnabled(true);
-		this.lblMaravilha.setEnabled(true);
-		this.pbMaravilha.setEnabled(true);
-	}
-
-	public void mostrarMaravilha(int tijolos) {
-		this.pbMaravilha.setValue(tijolos);
-	}
-
-	public void mostrarAtaques(List<String> evolucoes) {
-		this.cbTemploLancamentos.setEnabled(true);
-		this.cbTemploInimigo.setEnabled(true);
-		this.btnTemploLancar.setEnabled(true);
-		this.cbTemploLancamentos.removeAllItems();
-		for (String evolucao : evolucoes) {
-			switch (evolucao) {
-			case "NUVEM_GAFANHOTOS":	this.cbTemploLancamentos.addItem("Nuvem de gafanhotos");	break;
-			case "MORTE_PRIMOGENITOS":	this.cbTemploLancamentos.addItem("Morte dos primog�nitos");	break;
-			case "CHUVA_PEDRAS": 		this.cbTemploLancamentos.addItem("Chuva de pedras");
-			}
-		}
-	}
-
-	public void mostrarTemplo(String acao, Color cor) {
-		this.tfTemplo.setText(acao);
-		this.tfTemplo.setBackground(cor);
-	}
 	
-	//O jogo inicia com uma vila criada contendo
-	public void iniciarVila() {
-		this.adicionarAldeao("1", "fazendo nada");
-		this.adicionarAldeao("2", "fazendo nada");
-		this.adicionarAldeao("3", "fazendo nada");
-		this.adicionarAldeao("4", "fazendo nada");
-		this.adicionarAldeao("5", "fazendo nada");
-		
-		this.mostrarAldeao(1, "fazendo nada");
-		this.mostrarAldeao(2, "fazendo nada");
-		this.mostrarAldeao(3, "fazendo nada");
-		this.mostrarAldeao(4, "fazendo nada");
-		this.mostrarAldeao(5, "fazendo nada");
-		
-		this.adicionarFazenda("1", "Fazenda");
-		this.mostrarFazenda(1, "Fazenda");
-		
-		this.mostrarComida(150);
-		this.mostrarOuro(100);
-		
-		this.adicionarMinaOuro("1", "Mina");
-		this.mostrarMinaOuro(1, "Mina");
-		
-		this.mostrarOferendaFe(0);
-		this.mostrarPrefeitura("Prefeitura", Color.ORANGE);
-		
-		this.habilitarTemplo();
-		this.mostrarTemplo("ffff", Color.MAGENTA);
-		
-		this.habilitarMaravilha();
-		this.mostrarMaravilha(0);
-		List<String> evolucoes = new ArrayList<String>();
-		evolucoes.add("NUVEM_GAFANHOTOS");
-		evolucoes.add("MORTE_PRIMOGENITOS");
-		evolucoes.add("CHUVA_PEDRAS"); 
-		this.mostrarAtaques(evolucoes);
-	}
-	
-	//*** Sa�da=A��es/comandos - informa a��o do usu�rio *********************
-
-	public void comandoAldeaoParar(int aldeao) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoParar(aldeao);");
-	}
-
-	public void comandoAldeaoConstruir(int aldeao, String qual) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoConstruir(aldeao, qual);");
-	}
-
-	public void comandoAldeaoCultivar(int aldeao, int numeroFazenda) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoCultivar(aldeao, numeroFazenda);");
-	}
-
-	public void comandoAldeaoMinerar(int aldeao, int numeroMinaOuro) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoMinerar(aldeao, numeroMinaOuro);");
-	}
-
-	public void comandoAldeaoOrar(int aldeao) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoOrar(aldeao);");
-	}
-
-	public void comandoAldeaoSacrificar(int aldeao) {
-		if (aldeao == -1)
-			mostrarMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoSacrificar(aldeao);");
-	}
-
-	public void comandoPrefeituraCriarAldeao() {
-		System.out.println("comandoPrefeituraCriarAldeao();");
-	}
-
-	public void comandoPrefeituraEvoluir(String strEvolucao) {
-		System.out.println("comandoPrefeituraEvoluir(strEvolucao);");
-	}
-
-	public void comandoTemploEvoluir(String strEvolucao) {
-		System.out.println("comandoTemploEvoluir(strEvolucao);");
-	}
-	
-	public void comandoTemploLancar() {
-		System.out.println("comandoTemploLancar();");
-	}
-
 }
