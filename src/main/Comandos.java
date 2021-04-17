@@ -5,10 +5,14 @@ import uteis.View;
 public class Comandos {
 
 	public static void comandoAldeaoParar(int aldeao) {
+		aldeao++;
 		if (aldeao == -1)
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoParar(aldeao);");
+		else {
+			Principal.tmAldeoes.getColumnName(aldeao);
+			Mostrar.mostrarAldeao(aldeao, "Parado");
+		}
+			
 	}
 
 	public static void comandoAldeaoConstruir(int aldeao, String qual) {
@@ -46,11 +50,13 @@ public class Comandos {
 			System.out.println("comandoAldeaoSacrificar(aldeao);");
 	}
 
-	public static void comandoPrefeituraCriarAldeao(int value) {
+	public static void comandoPrefeituraCriarAldeao() {
 		int valor = Integer.parseInt(Principal.lblComida.getText());
-		if(valor>=100) {
-			Mostrar.adicionarAldeao(""+value, "Tempo de criação[20h]");
-			//this.mostrarAldeao(value, "fazendo nada");
+		Aldeao aldeao;
+		if(valor>=100) { // Criação do aldeão
+			aldeao = new Aldeao();
+			Thread threadAldeao = new Thread(aldeao);
+			threadAldeao.start();
 			Mostrar.mostrarComida(valor-100);
 		}else {
 			View.exibirMensagemErro("Erro", "Falta Comida");

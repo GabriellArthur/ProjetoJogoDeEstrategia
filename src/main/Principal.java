@@ -155,7 +155,7 @@ public class Principal extends JFrame {
 		pnAldeao.setBounds(10, 10, 270, 620);
 		pnTP_Vila.add(pnAldeao);
 
-		String[] colunasAldeoes = {"Nó", "Ação"};
+		String[] colunasAldeoes = {"nó", "Ação"};
 		Principal.tmAldeoes = (
 			new DefaultTableModel(null, colunasAldeoes){
 				public boolean isCellEditable(int row, int column){
@@ -225,7 +225,7 @@ public class Principal extends JFrame {
 		pnFazenda.setBounds(290, 10, 270, 305);
 		pnTP_Vila.add(pnFazenda);
 
-		String[] colunasFazendas = {"N�", "Alde�es"};
+		String[] colunasFazendas = {"nó", "Aldeões"};
 		Principal.tmFazendas = (new DefaultTableModel(null, colunasFazendas){
 			public boolean isCellEditable(int row, int column){
 				return false;
@@ -252,7 +252,7 @@ public class Principal extends JFrame {
 		pnMinaOuro.setBounds(290, 325, 270, 305);
 		pnTP_Vila.add(pnMinaOuro);
 
-		String[] colunasMinas = {"Nó�", "Aldeões"};
+		String[] colunasMinas = {"nó", "Aldeões"};
 		Principal.tmMinasOuro = (new DefaultTableModel(null, colunasMinas){
 			public boolean isCellEditable(int row, int column){
 				return false;
@@ -438,7 +438,7 @@ public class Principal extends JFrame {
 
 		btnPrefeituraCriarAldeao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comandos.comandoPrefeituraCriarAldeao(tmAldeoes.getRowCount()+1);				
+				Comandos.comandoPrefeituraCriarAldeao();				
 			}
 		});
 
