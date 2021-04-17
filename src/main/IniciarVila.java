@@ -10,14 +10,15 @@ public class IniciarVila {
 			Mostrar.adicionarAldeao(""+i, "Pronto");
 		}
 		
-		Mostrar.adicionarFazenda("0", "Fazenda");
+		Mostrar.adicionarFazenda("1", "Fazenda");
 		//Mostrar.mostrarFazenda(1, "Fazenda");
 		
-		Mostrar.mostrarComida(150);
-		Mostrar.mostrarOuro(100);
-		
-		Mostrar.adicionarMinaOuro("0", "Mina");
+		Mostrar.adicionarMinaOuro("1", "Mina");
 		//Mostrar.mostrarMinaOuro(1, "Mina");
+		
+		Mostrar.mostrarComida(150);
+		Mostrar.mostrarOuro(500);
+		
 		
 		Mostrar.mostrarOferendaFe(0);
 		Mostrar.mostrarPrefeitura("Prefeitura", Color.ORANGE);

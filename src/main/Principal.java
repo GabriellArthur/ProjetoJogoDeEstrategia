@@ -35,7 +35,7 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblJogador;
 	static JTable tblAldeoes;
-	static DefaultTableModel tmAldeoes;
+	public static DefaultTableModel tmAldeoes;
 	static JComboBox<String> cbFazenda;
 	static JComboBox<String> cbMinaOuro;
 	static JTable tblFazendas;
@@ -101,7 +101,7 @@ public class Principal extends JFrame {
 				String v=valor.toString();
 				switch (v) {							//Status do Aldeao e sua respetiva cor
 					case "Pronto":
-						setBackground(Color.GREEN);
+						setBackground(Color.WHITE);
 						break;
 					case "orando":
 						setBackground(new Color(135, 206, 235));
@@ -109,7 +109,7 @@ public class Principal extends JFrame {
 					case "sacrificado":
 						setBackground(Color.RED);
 						break;
-					case "cultivando":
+					case "Cultivando":
 						setBackground(Color.GREEN);
 						break;
 					case "minerando":
@@ -225,7 +225,7 @@ public class Principal extends JFrame {
 		pnFazenda.setBounds(290, 10, 270, 305);
 		pnTP_Vila.add(pnFazenda);
 
-		String[] colunasFazendas = {"nó", "Aldeões"};
+		String[] colunasFazendas = {"nó", "Fazenda"};
 		Principal.tmFazendas = (new DefaultTableModel(null, colunasFazendas){
 			public boolean isCellEditable(int row, int column){
 				return false;
@@ -252,7 +252,7 @@ public class Principal extends JFrame {
 		pnMinaOuro.setBounds(290, 325, 270, 305);
 		pnTP_Vila.add(pnMinaOuro);
 
-		String[] colunasMinas = {"nó", "Aldeões"};
+		String[] colunasMinas = {"nó", "Mina"};
 		Principal.tmMinasOuro = (new DefaultTableModel(null, colunasMinas){
 			public boolean isCellEditable(int row, int column){
 				return false;

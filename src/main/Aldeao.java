@@ -42,7 +42,6 @@ public class Aldeao implements Runnable{
 	@Override
 	public void run() {
 		this.criarAldeao();
-		
 	}
 	
 }
