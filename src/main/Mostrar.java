@@ -27,7 +27,7 @@ public class Mostrar {
 	}
 
 	public static void mostrarComida(int qtd) {
-		Principal.lblComida.setText(NumberFormat.getNumberInstance().format(qtd));
+		Principal.lblComida.setText(Integer.toString(qtd));
 	}
 
 	public static void adicionarMinaOuro(String numero, String aldeoes) {
@@ -41,7 +41,7 @@ public class Mostrar {
 	}
 
 	public static void mostrarOuro(int qtd) {
-		Principal.lblOuro.setText(NumberFormat.getNumberInstance().format(qtd));
+		Principal.lblOuro.setText(Integer.toString(qtd));
 	}
 
 	public static void mostrarOferendaFe(int qtd) {
