@@ -32,7 +32,7 @@ public class Comandos {
 				comandoAldeaoConstruirFazenda(aldeao);
 				break;
 			case "Mina de ouro":
-				
+				comandoAldeaoConstruirMinaDeOuro(aldeao);
 				break;
 			case "Templo":
 				
@@ -44,7 +44,7 @@ public class Comandos {
 		}
 			
 	}
-	//OK
+	
 	public static boolean SwitchCriarFazenda = false;
 	public static int comandoAldeaoConstruirFazenda;
 	public static void comandoAldeaoConstruirFazenda(int aldeao) {
@@ -67,6 +67,30 @@ public class Comandos {
 				}else {
 					View.exibirMensagemErro("Erro", "Falta Ouro");
 				}
+			}else {
+				View.exibirMensagemErro("Erro", "Falta Comida");
+			}
+		}else {
+			View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+		}
+	}
+	
+	public static boolean SwitchCriarMinaDeOuro = false;
+	public static int comandoAldeaoConstruirMinaDeOuro;
+	public static void comandoAldeaoConstruirMinaDeOuro(int aldeao) {
+		int comida = Integer.parseInt(Principal.lblComida.getText());
+		MinaDeOuro mina;
+		if(!Comandos.Aldeoes.contains(aldeao)) {
+			if(comida>=1000) {
+					SwitchCriarMinaDeOuro = true;
+					Aldeoes.add(aldeao);
+					comandoAldeaoConstruirMinaDeOuro = aldeao;
+					//
+					mina = new MinaDeOuro();
+					Thread threadMina = new Thread(mina);
+					threadMina.start();
+					//
+					Mostrar.mostrarComida(comida-1000);
 			}else {
 				View.exibirMensagemErro("Erro", "Falta Comida");
 			}
@@ -99,12 +123,29 @@ public class Comandos {
 		}
 			
 	}
-
+	
+	public static boolean SwitchMinerar = false;
+	public static int numeroDaMina;
+	public static int comandoAldeaoMinerar;
 	public static void comandoAldeaoMinerar(int aldeao, int numeroMinaOuro) {
-		if (aldeao == -1)
-			View.exibirMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoMinerar(aldeao, numeroMinaOuro);");
+		if(aldeao == -1) {
+			View.exibirMensagemErro("Error", "Escolha um aldeão");
+		}else {
+			if(!Comandos.Aldeoes.contains(aldeao)) {
+				SwitchMinerar = true;
+				numeroDaMina = numeroMinaOuro;
+				comandoAldeaoMinerar = aldeao;
+				Aldeoes.add(aldeao);
+				Mostrar.mostrarAldeao(aldeao+1, "Minerando");
+				
+				MinaDeOuro mina;
+				mina = new MinaDeOuro();
+				Thread threadMina = new Thread(mina);
+				threadMina.start();
+			}else {
+				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+			}
+		}
 	}
 
 	public static  void comandoAldeaoOrar(int aldeao) {

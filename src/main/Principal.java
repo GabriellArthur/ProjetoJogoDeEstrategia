@@ -112,7 +112,7 @@ public class Principal extends JFrame {
 					case "Cultivando":
 						setBackground(Color.GREEN);
 						break;
-					case "minerando":
+					case "Minerando":
 						setBackground(Color.YELLOW);
 						break;
 					case "Construindo":

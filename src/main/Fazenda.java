@@ -48,7 +48,6 @@ public class Fazenda implements Runnable {
 			for (Integer integer : Comandos.Aldeoes) {
 				if(integer == Comandos.comandoAldeaoConstruirFazenda) {
 					Comandos.Aldeoes.remove(integer);
-					System.out.println(Comandos.Aldeoes.size());
 				}
 			}
 		} catch (InterruptedException e) {
