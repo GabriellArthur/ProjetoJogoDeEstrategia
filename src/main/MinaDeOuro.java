@@ -1,6 +1,5 @@
 package main;
 
-import uteis.View;
 
 /*
  * Custo: 1000 Comida 
@@ -11,27 +10,15 @@ import uteis.View;
  * Produção por fazendeiro: 5 unidade a cada 3h + 3h para transporte até a prefeitura
  */
 public class MinaDeOuro implements Runnable{
-	private int level;
 	int tempoConstrução;
 	int capacidade;
 	int tempoFazendeiro;
 	int tempoEvolucao;
 	
 	MinaDeOuro(){
-		this.level=0;
 		this.tempoConstrução=40;
 		this.capacidade=5;
 		this.tempoFazendeiro=3;
-	}
-	
-	public void upgradeMinaDeOuro() {
-		if(this.level>=10) {
-			View.exibirMensagemErro("ERROR", "Mina de ouro já está no nivel maximo!");
-		}else {
-			this.level++;
-			this.capacidade= this.capacidade*2;
-			this.tempoEvolucao=100;
-		}
 	}
 	
 	public synchronized void criarMina() {
@@ -62,9 +49,9 @@ public class MinaDeOuro implements Runnable{
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar+1)) {
 				try {
 					Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Minerando");
-					Thread.sleep(3000);
+					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
 					int ouro = Integer.parseInt(Principal.lblOuro.getText());
-					ouro = ouro+(Comandos.Aldeoes.size()*10);
+					ouro = ouro+(Comandos.Aldeoes.size()*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
 					Mostrar.mostrarOuro(ouro);
 				} catch (InterruptedException e) {
 					e.printStackTrace();

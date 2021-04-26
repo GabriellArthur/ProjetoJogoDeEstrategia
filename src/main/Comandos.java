@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
+import evolucoes.EvolucoesPrefeitura;
 import evolucoes.EvolucoesTemplo;
 import uteis.View;
 
@@ -9,6 +10,7 @@ public class Comandos {
 	public static ArrayList<Integer> Aldeoes = new ArrayList<Integer>();
 	public static boolean isTemplo = false;
 	public static EvolucoesTemplo evolucaoTemplo = new EvolucoesTemplo();
+	public static EvolucoesPrefeitura evolucoesPrefeitura = new EvolucoesPrefeitura();
 	
 	public static void comandoAldeaoParar(int aldeao) {
 		if (aldeao == -1)
@@ -42,7 +44,7 @@ public class Comandos {
 				comandoAldeaoConstruirTemplo(aldeao);
 				break;
 			case "Maravilha":
-				
+				comandoAldeaoConstruirMaravilha(aldeao);
 				break;
 			}
 		}
@@ -135,6 +137,17 @@ public class Comandos {
 				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
 			}
 		}
+	}
+	
+	public static int comandoAldeaoConstruirMaravilha;
+	public static void comandoAldeaoConstruirMaravilha(int aldeao) {
+		Aldeoes.add(aldeao);
+		comandoAldeaoConstruirMaravilha = aldeao;
+		Mostrar.mostrarAldeao(aldeao+1, "Construindo Maravilha");
+		//
+		Maravilha maravilha = new Maravilha();
+		Thread threadMaravilha = new Thread(maravilha);
+		threadMaravilha.start();
 	}
 	
 	public static boolean SwitchCultivar = false;
@@ -259,6 +272,6 @@ public class Comandos {
 	}
 
 	public static void comandoPrefeituraEvoluir(String strEvolucao) {
-		System.out.println("comandoPrefeituraEvoluir(strEvolucao);");
+		System.out.println(strEvolucao);
 	}
 }

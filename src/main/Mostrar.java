@@ -86,7 +86,7 @@ public class Mostrar {
 		for (String evolucao : evolucoes) {
 			switch (evolucao) {
 			case "NUVEM_GAFANHOTOS":	Principal.cbTemploLancamentos.addItem("Nuvem de gafanhotos");	break;
-			case "MORTE_PRIMOGENITOS":	Principal.cbTemploLancamentos.addItem("Morte dos primog�nitos");	break;
+			case "MORTE_PRIMOGENITOS":	Principal.cbTemploLancamentos.addItem("Morte dos primogênitos");	break;
 			case "CHUVA_PEDRAS": 		Principal.cbTemploLancamentos.addItem("Chuva de pedras");
 			}
 		}

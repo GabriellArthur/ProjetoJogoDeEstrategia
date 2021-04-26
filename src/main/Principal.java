@@ -34,7 +34,7 @@ import java.awt.Toolkit;
 public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	//Jogador
-	private JLabel lblJogador;
+	static JLabel lblJogador;
 	//Aldeao
 	static JTable tblAldeoes;
 	public static DefaultTableModel tmAldeoes;
@@ -48,10 +48,9 @@ public class Principal extends JFrame {
 	static DefaultTableModel tmMinasOuro;
 	//Prefeitura
 	static String acaoPrefeitura;
-	
 	static JTextField tfPrefeitura;
-	static JLabel lblComida;
-	static JLabel lblOuro;
+	public static JLabel lblComida;
+	public static JLabel lblOuro;
 	//Templo
 	static JPanel pnTemplo;
 	static JPanel pnOferenda;
@@ -63,6 +62,7 @@ public class Principal extends JFrame {
 	static JComboBox<String> cbTemploInimigo;
 	static JButton btnTemploLancar;
 	//Maravilha
+	public static int tijolos;
 	static JPanel pnMaravilha;
 	static JLabel lblMaravilha;
 	static JProgressBar pbMaravilha;
@@ -83,7 +83,7 @@ public class Principal extends JFrame {
 			//String nome = View.inserirNome();
 			//String civilizacao = View.civilizacao();
 	        //Principal.lblJogador.setText(nome +" - "+ civilizacao);
-			this.lblJogador.setText("A" +" - "+ "TEST");
+			lblJogador.setText("A" +" - "+ "TEST");
 		} catch (Exception e) {
 			View.exibirMensagem(e.getMessage());
 		}
@@ -118,7 +118,7 @@ public class Principal extends JFrame {
 					case "Sacrificado":
 						setBackground(Color.RED);
 						break;
-					case "Colhendo":
+					case "Cultivando":
 						setBackground(Color.GREEN);
 						break;
 					case "Minerando":
@@ -398,7 +398,7 @@ public class Principal extends JFrame {
 		Principal.pbMaravilha = new JProgressBar();
 		Principal.pbMaravilha.setOrientation(SwingConstants.VERTICAL);
 		Principal.pbMaravilha.setBounds(225, 20, 30, 170);
-		Principal.pbMaravilha.setMaximum(100000);
+		Principal.pbMaravilha.setMaximum(10000);
 		Principal.pbMaravilha.setStringPainted(true);
 		Principal.pbMaravilha.setEnabled(false);
 		Principal.pnMaravilha.add(pbMaravilha);

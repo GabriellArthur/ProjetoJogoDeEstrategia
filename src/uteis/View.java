@@ -3,6 +3,7 @@ package uteis;
 import javax.swing.JOptionPane;
 
 public class View {
+	
 	public static void exibirMensagem(String msg) {
 		JOptionPane.showMessageDialog(null, msg);
 	}

@@ -8,30 +8,17 @@ package main;
  * Produção por fazendeiro: 10 unidade a cada 1h + 2h para transporte até a prefeitura
  */
 
-import uteis.View;
 
 public class Fazenda implements Runnable {
-	private int level;
 	int tempoConstrução;
 	int Capacidade;
 	int tempoFazendeiro;
 	int tempoEvolucao;
 	
 	Fazenda(){
-		this.level=0;
 		this.tempoConstrução=30;
 		this.Capacidade = 5;
 		this.tempoFazendeiro=3; //3h
-	}
-	
-	public void upgradeFazenda() {
-		if(this.level>=10) {
-			View.exibirMensagemErro("ERROR", "Fazenda já está no nivel maximo!");
-		}else {
-			this.level ++;
-			this.Capacidade = this.Capacidade *2;
-			this.tempoEvolucao=100;
-		}
 	}
 	
 	public synchronized void criarFazenda() {
@@ -58,14 +45,13 @@ public class Fazenda implements Runnable {
 	private synchronized void cultivar() {
 		Comandos.SwitchCultivar = false;
 		boolean continuar = true;
-		
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoCultivarFazenda)) {
 				try {
 					Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Colhendo");
-					Thread.sleep(3000);
+					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
 					int comida = Integer.parseInt(Principal.lblComida.getText());
-					comida = comida+(Comandos.Aldeoes.size()*10);
+					comida = comida+(Comandos.Aldeoes.size()*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
 					Mostrar.mostrarComida(comida);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
