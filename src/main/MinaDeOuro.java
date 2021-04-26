@@ -34,19 +34,19 @@ public class MinaDeOuro implements Runnable{
 		}
 	}
 	
-	public void criarMina() {
+	public synchronized void criarMina() {
 		Comandos.SwitchCriarMinaDeOuro = false;
-		int valor = Principal.tmMinasOuro.getRowCount()+1;
+		int mina = Principal.tmMinasOuro.getRowCount()+1;
 		int aldeao = Comandos.comandoAldeaoConstruirMinaDeOuro+1;
-		Mostrar.mostrarAldeao(aldeao, "Minerando");
-		Mostrar.adicionarMinaOuro(""+valor, "Tempo de criação [40s]");
+		Mostrar.mostrarAldeao(aldeao, "Construindo Mina ["+mina+"]");
+		Mostrar.adicionarMinaOuro(""+mina, "Tempo de criação [40s]");
 		try {
 			Thread.sleep(4000);//30000
-			Mostrar.mostrarMinaOuro(valor, "Pronto");
+			Mostrar.mostrarMinaOuro(mina, "Pronto");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
 			for (Integer integer : Comandos.Aldeoes) {
-				if(integer == Comandos.comandoAldeaoConstruirFazenda) {
+				if(integer == Comandos.comandoAldeaoConstruirMinaDeOuro) {
 					Comandos.Aldeoes.remove(integer);
 				}
 			}
@@ -55,13 +55,13 @@ public class MinaDeOuro implements Runnable{
 		}
 	}
 	
-	public void minerar() {
+	public synchronized void minerar() {
 		Comandos.SwitchMinerar = false;
 		boolean continuar = true;
 		while(continuar) {
-			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar)) {
+			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar+1)) {
 				try {
-					Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Produzindo");
+					Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Minerando");
 					Thread.sleep(3000);
 					int ouro = Integer.parseInt(Principal.lblOuro.getText());
 					ouro = ouro+(Comandos.Aldeoes.size()*10);
@@ -72,8 +72,7 @@ public class MinaDeOuro implements Runnable{
 			}else {
 				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
 				Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Parado");
-				continuar = false;
-				Thread.interrupted();	
+				continuar = false;	
 			}
 		}
 	}

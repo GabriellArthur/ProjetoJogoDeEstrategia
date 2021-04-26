@@ -33,18 +33,24 @@ import java.awt.Toolkit;
 
 public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
+	//Jogador
 	private JLabel lblJogador;
+	//Aldeao
 	static JTable tblAldeoes;
 	public static DefaultTableModel tmAldeoes;
+	//Fazenda
 	static JComboBox<String> cbFazenda;
-	static JComboBox<String> cbMinaOuro;
 	static JTable tblFazendas;
 	static DefaultTableModel tmFazendas;
+	//Mina de Ouro
+	static JComboBox<String> cbMinaOuro;
 	static JTable tblMinasOuro;
 	static DefaultTableModel tmMinasOuro;
+	//Prefeitura
+	static JTextField tfPrefeitura;
 	static JLabel lblComida;
 	static JLabel lblOuro;
-	static JTextField tfPrefeitura;
+	//Templo
 	static JPanel pnTemplo;
 	static JPanel pnOferenda;
 	static JLabel lblOferenda;
@@ -54,6 +60,7 @@ public class Principal extends JFrame {
 	static JComboBox<String> cbTemploLancamentos;
 	static JComboBox<String> cbTemploInimigo;
 	static JButton btnTemploLancar;
+	//Maravilha
 	static JPanel pnMaravilha;
 	static JLabel lblMaravilha;
 	static JProgressBar pbMaravilha;
@@ -103,23 +110,20 @@ public class Principal extends JFrame {
 					case "Pronto":
 						setBackground(Color.WHITE);
 						break;
-					case "orando":
+					case "Orando":
 						setBackground(new Color(135, 206, 235));
 						break;
-					case "sacrificado":
+					case "Sacrificado":
 						setBackground(Color.RED);
 						break;
-					case "Cultivando":
+					case "Colhendo":
 						setBackground(Color.GREEN);
 						break;
 					case "Minerando":
 						setBackground(Color.YELLOW);
 						break;
-					case "Construindo":
-						setBackground(Color.LIGHT_GRAY);
-						break;
 					default:
-						setBackground(Color.BLACK);
+						setBackground(Color.LIGHT_GRAY); //Construindo
 						break;
 				}
 				super.setValue(valor);
@@ -318,7 +322,7 @@ public class Principal extends JFrame {
 		JButton btnPrefeituraEvoluir = new JButton("Evoluir");
 		btnPrefeituraEvoluir.setBounds(131, 140, 128, 21);
 		pnPrefeitura.add(btnPrefeituraEvoluir);
-
+		//Templo
 		Principal.pnTemplo = new JPanel();
 		Principal.pnTemplo.setLayout(null);
 		Principal.pnTemplo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Templo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -374,7 +378,8 @@ public class Principal extends JFrame {
 		Principal.btnTemploLancar.setBounds(131, 190, 128, 21);
 		Principal.btnTemploLancar.setEnabled(false);
 		Principal.pnTemplo.add(Principal.btnTemploLancar);
-
+		
+		//Templo
 		Principal.pnMaravilha = new JPanel();
 		Principal.pnMaravilha.setLayout(null);
 		Principal.pnMaravilha.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Maravilha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));

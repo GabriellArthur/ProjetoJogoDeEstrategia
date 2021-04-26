@@ -2,10 +2,14 @@ package main;
 
 import java.util.ArrayList;
 
+import evolucoes.EvolucoesTemplo;
 import uteis.View;
 
 public class Comandos {
 	public static ArrayList<Integer> Aldeoes = new ArrayList<Integer>();
+	public static boolean isTemplo = false;
+	public static EvolucoesTemplo evolucaoTemplo = new EvolucoesTemplo();
+	
 	public static void comandoAldeaoParar(int aldeao) {
 		if (aldeao == -1)
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
@@ -35,7 +39,7 @@ public class Comandos {
 				comandoAldeaoConstruirMinaDeOuro(aldeao);
 				break;
 			case "Templo":
-				
+				comandoAldeaoConstruirTemplo(aldeao);
 				break;
 			case "Maravilha":
 				
@@ -99,6 +103,40 @@ public class Comandos {
 		}
 	}
 	
+	public static boolean SwitchCriarTemplo = false;
+	public static int comandoAldeaoConstruirTemplo;
+	public static void comandoAldeaoConstruirTemplo(int aldeao) {
+		if(isTemplo == true) {
+			View.exibirMensagemErro("Erro", "Já possui Templo");
+		}else {
+			int comida = Integer.parseInt(Principal.lblComida.getText());
+			int ouro = Integer.parseInt(Principal.lblOuro.getText());
+			Templo templo;
+			if(!Comandos.Aldeoes.contains(aldeao)) {
+				if(comida>=2000) {
+					if(ouro>=2000) {
+						SwitchCriarTemplo = true;
+						Aldeoes.add(aldeao);
+						comandoAldeaoConstruirTemplo = aldeao;
+						//
+						templo = new Templo();
+						Thread threadTemplo = new Thread(templo);
+						threadTemplo.start();
+						//
+						Mostrar.mostrarComida(comida-2000);
+						Mostrar.mostrarOuro(ouro-2000);
+					}else {
+						View.exibirMensagemErro("Erro", "Falta Ouro");
+					}
+				}else {
+					View.exibirMensagemErro("Erro", "Falta Comida");
+				}
+			}else {
+				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+			}
+		}
+	}
+	
 	public static boolean SwitchCultivar = false;
 	public static int numeroDaFazendo;
 	public static int comandoAldeaoCultivarFazenda;
@@ -147,19 +185,51 @@ public class Comandos {
 			}
 		}
 	}
-
+	
+	public static boolean SwitchOrar = false;
+	public static int comandoAldeaoOrar;
 	public static  void comandoAldeaoOrar(int aldeao) {
-		if (aldeao == -1)
+		if (aldeao == -1) {
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoOrar(aldeao);");
+		}else if(isTemplo==false) {
+			View.exibirMensagemErro("Erro", "Não possui Templo");
+		}else {
+			if(!Comandos.Aldeoes.contains(aldeao)) {
+				SwitchOrar = true;
+				comandoAldeaoOrar = aldeao;
+				Aldeoes.add(aldeao);
+				
+				Templo templo;
+				templo = new Templo();
+				Thread threadTemplo = new Thread(templo);
+				threadTemplo.start();
+			}else {
+				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+			}
+		}
 	}
-
+	
+	public static boolean SwitchSacrificar = false;
+	public static int comandoAldeaoSacrificar;
 	public static void comandoAldeaoSacrificar(int aldeao) {
-		if (aldeao == -1)
-			View.exibirMensagemErro("Erro", "Escolha um aldeão");
-		else
-			System.out.println("comandoAldeaoSacrificar(aldeao);");
+		if (aldeao == -1) {
+			View.exibirMensagemErro("Erro", "Escolha um Aldeão");
+		}else if(isTemplo==false) {
+			View.exibirMensagemErro("Erro", "Não possui Templo");
+		}else {
+			if(!Comandos.Aldeoes.contains(aldeao)) {
+				SwitchSacrificar = true;
+				comandoAldeaoSacrificar = aldeao;
+				Aldeoes.add(aldeao);
+				
+				Templo templo;
+				templo = new Templo();
+				Thread threadTemplo = new Thread(templo);
+				threadTemplo.start();
+			}else {
+				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+			}
+		}
 	}
 
 	public static void comandoPrefeituraCriarAldeao() {
@@ -175,16 +245,70 @@ public class Comandos {
 		}
 	}
 
-	public static void comandoPrefeituraEvoluir(String strEvolucao) {
-		System.out.println("comandoPrefeituraEvoluir(strEvolucao);");
-	}
 
 	public static void comandoTemploEvoluir(String strEvolucao) {
-		System.out.println("comandoTemploEvoluir(strEvolucao);");
+		if(isTemplo==false) {
+			View.exibirMensagemErro("Erro", "Não possui Templo");
+		}else {
+			int fe = Integer.parseInt(Principal.lblOferenda.getText());
+			switch (strEvolucao) {
+				case "Nuvem de gafanhotos":
+					if(fe>=1000) {
+						fe = fe - 1000;
+						evolucaoTemplo.evolucaoGarfanhoto();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos]");
+					}
+					break;
+				case "Morte dos primogénitos":
+					if(fe>=1500) {
+						fe = fe - 1500;
+						evolucaoTemplo.evolucaoPrimogenitos();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
+					}
+					break;
+				case "Chuva de pedras":
+					if(fe>=2000) {
+						fe = fe - 2000;
+						evolucaoTemplo.evolucaoChuvaPedras();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras]");
+					}
+					break;
+				case "Proteção contra nuvem de gafanhotos":
+					if(fe>=5000) {
+						fe = fe - 5000;
+						evolucaoTemplo.evolucaoProtecaoGarfanhoto();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos]");
+					}
+					break;
+				case "Proteção contra morte dos primogénitos":
+					if(fe>=6000) {
+						fe = fe - 6000;
+						evolucaoTemplo.evolucaoProtecaoPrimogenitos();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra morte dos primogénitos]");
+					}
+					break;
+				case "Proteção contra chuva de pedras":
+					if(fe>=7000) {
+						fe = fe - 7000;
+						evolucaoTemplo.evolucaoProtecaoChuvaPedras();
+					}else {
+						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra chuva de pedras]");
+					}
+					break;
+			}
+		}
 	}
 	
-	public static void comandoTemploLancar() {
+	public static void comandoTemploLancar() { //Segunda parte
 		System.out.println("comandoTemploLancar();");
 	}
 
+	public static void comandoPrefeituraEvoluir(String strEvolucao) {
+		System.out.println("comandoPrefeituraEvoluir(strEvolucao);");
+	}
 }

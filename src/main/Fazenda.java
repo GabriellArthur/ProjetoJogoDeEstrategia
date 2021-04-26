@@ -34,15 +34,15 @@ public class Fazenda implements Runnable {
 		}
 	}
 	
-	public void criarFazenda() {
+	public synchronized void criarFazenda() {
 		Comandos.SwitchCriarFazenda = false;
-		int valor = Principal.tmFazendas.getRowCount()+1;
+		int fazenda = Principal.tmFazendas.getRowCount()+1;
 		int aldeao = Comandos.comandoAldeaoConstruirFazenda+1;
-		Mostrar.mostrarAldeao(aldeao, "Construindo");
-		Mostrar.adicionarFazenda(""+valor, "Tempo de criação[30s]");
+		Mostrar.mostrarAldeao(aldeao, "Construindo Mina ["+fazenda+"]");
+		Mostrar.adicionarFazenda(""+fazenda, "Tempo de criação[30s]");
 		try {
 			Thread.sleep(3000);//30000
-			Mostrar.mostrarFazenda(valor, "Pronto");
+			Mostrar.mostrarFazenda(fazenda, "Pronto");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
 			for (Integer integer : Comandos.Aldeoes) {
@@ -55,13 +55,14 @@ public class Fazenda implements Runnable {
 		}
 	}
 	
-	private void cultivar() {
+	private synchronized void cultivar() {
 		Comandos.SwitchCultivar = false;
 		boolean continuar = true;
+		
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoCultivarFazenda)) {
 				try {
-					Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Produzindo");
+					Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Colhendo");
 					Thread.sleep(3000);
 					int comida = Integer.parseInt(Principal.lblComida.getText());
 					comida = comida+(Comandos.Aldeoes.size()*10);
@@ -73,7 +74,6 @@ public class Fazenda implements Runnable {
 				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
 				Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Parado");
 				continuar = false;
-				Thread.interrupted();	
 			}
 		}
 		
