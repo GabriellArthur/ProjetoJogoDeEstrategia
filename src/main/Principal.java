@@ -47,13 +47,15 @@ public class Principal extends JFrame {
 	static JTable tblMinasOuro;
 	static DefaultTableModel tmMinasOuro;
 	//Prefeitura
+	static String acaoPrefeitura;
+	
 	static JTextField tfPrefeitura;
 	static JLabel lblComida;
 	static JLabel lblOuro;
 	//Templo
 	static JPanel pnTemplo;
 	static JPanel pnOferenda;
-	static JLabel lblOferenda;
+	public static JLabel lblOferenda;
 	static JTextField tfTemplo;
 	static JComboBox<String> cbTEmploEvolucoes;
 	static JButton btnTemploEvoluir;
@@ -279,7 +281,7 @@ public class Principal extends JFrame {
 
 		JPanel pnPrefeitura = new JPanel();
 		pnPrefeitura.setLayout(null);
-		pnPrefeitura.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Prefeitura", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnPrefeitura.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), acaoPrefeitura, TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnPrefeitura.setBounds(570, 10, 270, 175);
 		pnTP_Vila.add(pnPrefeitura);
 

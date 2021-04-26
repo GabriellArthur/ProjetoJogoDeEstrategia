@@ -1,4 +1,7 @@
 package main;
+
+import java.awt.Color;
+
 /*
 Templo
 Custo: comida=2.000 + ouro=2.000 (pré-pago)
@@ -15,7 +18,7 @@ Observação: aldeão sacrificado é morto
 */
 public class Templo implements Runnable{
 	int tempoConstrução; //100 horas
-	
+
 	Templo(){
 		this.tempoConstrução = 100;
 	}
@@ -40,6 +43,9 @@ public class Templo implements Runnable{
 		try {
 			Comandos.isTemplo = true;
 			Thread.sleep(1000);//10000
+			Mostrar.mostrarOferendaFe(50000);
+			Mostrar.habilitarTemplo();
+			Mostrar.mostrarTemplo("Templo Criado", Color.MAGENTA);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

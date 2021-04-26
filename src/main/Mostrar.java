@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Color;
-import java.text.NumberFormat;
 import java.util.List;
 
 public class Mostrar {
@@ -45,7 +44,7 @@ public class Mostrar {
 	}
 
 	public static void mostrarOferendaFe(int qtd) {
-		Principal.lblOferenda.setText(NumberFormat.getNumberInstance().format(qtd));
+		Principal.lblOferenda.setText(Integer.toString(qtd));
 	}
 
 	public static void mostrarPrefeitura(String acao, Color cor) {
@@ -53,12 +52,20 @@ public class Mostrar {
 		Principal.tfPrefeitura.setBackground(cor);
 	}
 
+	public static void desabilitarhabilitarTemplo() {
+			Principal.pnTemplo.setEnabled(false);
+			Principal.pnOferenda.setEnabled(false);
+			Principal.lblOferenda.setEnabled(false);
+			Principal.cbTEmploEvolucoes.setEnabled(false);
+			Principal.btnTemploEvoluir.setEnabled(false);	
+	}
+	
 	public static void habilitarTemplo() {
-		Principal.pnTemplo.setEnabled(true);
-		Principal.pnOferenda.setEnabled(true);
-		Principal.lblOferenda.setEnabled(true);
-		Principal.cbTEmploEvolucoes.setEnabled(true);
-		Principal.btnTemploEvoluir.setEnabled(true);
+			Principal.pnTemplo.setEnabled(true);
+			Principal.pnOferenda.setEnabled(true);
+			Principal.lblOferenda.setEnabled(true);
+			Principal.cbTEmploEvolucoes.setEnabled(true);
+			Principal.btnTemploEvoluir.setEnabled(true);
 	}
 
 	public static void habilitarMaravilha() {

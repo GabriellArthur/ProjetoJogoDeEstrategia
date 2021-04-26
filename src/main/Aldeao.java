@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Color;
+
 import uteis.View;
 
 //Evolução = Dobra a produção, e reduz o tempo de transporte da produção, tempo de evolução 100horas;
@@ -34,6 +36,7 @@ public class Aldeao implements Runnable{
 		try {
 			Thread.sleep(10000);
 			Mostrar.mostrarAldeao(valor, "Pronto");
+			Mostrar.mostrarPrefeitura("Aldeao ["+valor+"] Criado", Color.GREEN);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

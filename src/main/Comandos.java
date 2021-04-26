@@ -250,57 +250,7 @@ public class Comandos {
 		if(isTemplo==false) {
 			View.exibirMensagemErro("Erro", "Não possui Templo");
 		}else {
-			int fe = Integer.parseInt(Principal.lblOferenda.getText());
-			switch (strEvolucao) {
-				case "Nuvem de gafanhotos":
-					if(fe>=1000) {
-						fe = fe - 1000;
-						evolucaoTemplo.evolucaoGarfanhoto();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos]");
-					}
-					break;
-				case "Morte dos primogénitos":
-					if(fe>=1500) {
-						fe = fe - 1500;
-						evolucaoTemplo.evolucaoPrimogenitos();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
-					}
-					break;
-				case "Chuva de pedras":
-					if(fe>=2000) {
-						fe = fe - 2000;
-						evolucaoTemplo.evolucaoChuvaPedras();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras]");
-					}
-					break;
-				case "Proteção contra nuvem de gafanhotos":
-					if(fe>=5000) {
-						fe = fe - 5000;
-						evolucaoTemplo.evolucaoProtecaoGarfanhoto();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos]");
-					}
-					break;
-				case "Proteção contra morte dos primogénitos":
-					if(fe>=6000) {
-						fe = fe - 6000;
-						evolucaoTemplo.evolucaoProtecaoPrimogenitos();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra morte dos primogénitos]");
-					}
-					break;
-				case "Proteção contra chuva de pedras":
-					if(fe>=7000) {
-						fe = fe - 7000;
-						evolucaoTemplo.evolucaoProtecaoChuvaPedras();
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra chuva de pedras]");
-					}
-					break;
-			}
+			evolucaoTemplo.evoluir(strEvolucao);
 		}
 	}
 	
