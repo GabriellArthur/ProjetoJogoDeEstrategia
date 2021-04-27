@@ -29,14 +29,10 @@ public class MinaDeOuro implements Runnable{
 		Mostrar.adicionarMinaOuro(""+mina, "Tempo de criação [40s]");
 		try {
 			Thread.sleep(4000);//30000
-			Mostrar.mostrarMinaOuro(mina, "Pronto");
+			Mostrar.mostrarMinaOuro(mina, "Parada");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
-			for (Integer integer : Comandos.Aldeoes) {
-				if(integer == Comandos.comandoAldeaoConstruirMinaDeOuro) {
-					Comandos.Aldeoes.remove(integer);
-				}
-			}
+			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirMinaDeOuro));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -46,7 +42,7 @@ public class MinaDeOuro implements Runnable{
 		Comandos.SwitchMinerar = false;
 		boolean continuar = true;
 		while(continuar) {
-			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar+1)) {
+			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar)) {
 				try {
 					Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Minerando");
 					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
@@ -58,7 +54,7 @@ public class MinaDeOuro implements Runnable{
 				}
 			}else {
 				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
-				Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Parado");
+				Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Parada");
 				continuar = false;	
 			}
 		}

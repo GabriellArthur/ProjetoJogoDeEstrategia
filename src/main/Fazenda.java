@@ -25,32 +25,28 @@ public class Fazenda implements Runnable {
 		Comandos.SwitchCriarFazenda = false;
 		int fazenda = Principal.tmFazendas.getRowCount()+1;
 		int aldeao = Comandos.comandoAldeaoConstruirFazenda+1;
-		Mostrar.mostrarAldeao(aldeao, "Construindo Mina ["+fazenda+"]");
+		Mostrar.mostrarAldeao(aldeao, "Construindo Fazenda ["+fazenda+"]");
 		Mostrar.adicionarFazenda(""+fazenda, "Tempo de criação[30s]");
 		try {
 			Thread.sleep(3000);//30000
-			Mostrar.mostrarFazenda(fazenda, "Pronto");
+			Mostrar.mostrarFazenda(fazenda, "Parada");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
-			for (Integer integer : Comandos.Aldeoes) {
-				if(integer == Comandos.comandoAldeaoConstruirFazenda) {
-					Comandos.Aldeoes.remove(integer);
-				}
-			}
+			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirFazenda));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private synchronized void cultivar() {
+	private void cultivar() {
 		Comandos.SwitchCultivar = false;
 		boolean continuar = true;
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoCultivarFazenda)) {
 				try {
+					int comida = Integer.parseInt(Principal.lblComida.getText());
 					Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Colhendo");
 					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
-					int comida = Integer.parseInt(Principal.lblComida.getText());
 					comida = comida+(Comandos.Aldeoes.size()*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
 					Mostrar.mostrarComida(comida);
 				} catch (InterruptedException e) {
@@ -58,7 +54,7 @@ public class Fazenda implements Runnable {
 				}
 			}else {
 				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
-				Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Parado");
+				Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Parada");
 				continuar = false;
 			}
 		}

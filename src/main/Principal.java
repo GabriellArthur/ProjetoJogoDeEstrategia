@@ -80,10 +80,10 @@ public class Principal extends JFrame {
         initialize();
         IniciarVila.iniciarVila();
 		try {
-			//String nome = View.inserirNome();
-			//String civilizacao = View.civilizacao();
-	        //Principal.lblJogador.setText(nome +" - "+ civilizacao);
-			lblJogador.setText("A" +" - "+ "TEST");
+			String nome = View.inserirNome();
+			String civilizacao = View.civilizacao();
+	        Principal.lblJogador.setText(nome +" - "+ civilizacao);
+			//lblJogador.setText("A" +" - "+ "TEST");
 		} catch (Exception e) {
 			View.exibirMensagem(e.getMessage());
 		}
@@ -126,6 +126,27 @@ public class Principal extends JFrame {
 						break;
 					default:
 						setBackground(Color.LIGHT_GRAY); //Construindo
+						break;
+				}
+				super.setValue(valor);
+			}
+		};
+		
+		DefaultTableCellRenderer dtcrVilaAcao = new DefaultTableCellRenderer() {
+			public void setValue(Object valor) {
+				String v=valor.toString();
+				switch (v) {							
+					case "Parada":
+						setBackground(Color.WHITE);
+						break;
+					case "Colhendo":
+						setBackground(Color.GREEN);
+						break;
+					case "Minerando":
+						setBackground(Color.YELLOW);
+						break;
+					default:
+						setBackground(Color.LIGHT_GRAY); 
 						break;
 				}
 				super.setValue(valor);
@@ -246,6 +267,7 @@ public class Principal extends JFrame {
 		Principal.tblFazendas.getColumnModel().getColumn(0).setPreferredWidth(30);
 		Principal.tblFazendas.getColumnModel().getColumn(1).setResizable(false);
 		Principal.tblFazendas.getColumnModel().getColumn(1).setPreferredWidth(202);
+		Principal.tblFazendas.getColumn("Fazenda").setCellRenderer(dtcrVilaAcao);
 
 		JScrollPane spFazendas = new JScrollPane(Principal.tblFazendas);
 		spFazendas.setBounds(10, 20, 250, 275);
@@ -273,6 +295,7 @@ public class Principal extends JFrame {
 		Principal.tblMinasOuro.getColumnModel().getColumn(0).setPreferredWidth(30);
 		Principal.tblMinasOuro.getColumnModel().getColumn(1).setResizable(false);
 		Principal.tblMinasOuro.getColumnModel().getColumn(1).setPreferredWidth(202);
+		Principal.tblMinasOuro.getColumn("Mina").setCellRenderer(dtcrVilaAcao);
 
 		JScrollPane spMinas = new JScrollPane(Principal.tblMinasOuro);
 		spMinas.setBounds(10, 20, 250, 275);

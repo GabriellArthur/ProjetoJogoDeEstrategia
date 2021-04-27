@@ -50,11 +50,7 @@ public class Templo implements Runnable{
 			e.printStackTrace();
 		}
 		Mostrar.mostrarAldeao(aldeao, "Pronto");
-		for (Integer integer : Comandos.Aldeoes) {
-			if(integer == Comandos.comandoAldeaoConstruirTemplo) {
-				Comandos.Aldeoes.remove(integer);
-			}
-		}
+		Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirTemplo));
 		
 	}
 	

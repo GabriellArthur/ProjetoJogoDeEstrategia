@@ -12,13 +12,9 @@ public class IniciarVila {
 		
 		Mostrar.adicionarMinaOuro("1", "Mina");
 		
-		//Mostrar.mostrarComida(150);
-		//Mostrar.mostrarOuro(500);
+		Mostrar.mostrarComida(150);
+		Mostrar.mostrarOuro(500);
 		
-		//TESTE
-		Mostrar.mostrarComida(500000);
-		Mostrar.mostrarOuro(500000);
-		//
 		
 		Mostrar.mostrarPrefeitura("Prefeitura", Color.ORANGE);
 		

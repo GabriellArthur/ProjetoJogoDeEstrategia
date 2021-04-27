@@ -17,11 +17,8 @@ public class Comandos {
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
 		else {
 			if(Comandos.Aldeoes.contains(aldeao)) {
-				for (Integer integer : Aldeoes) {
-					if(integer == aldeao) {
-						Aldeoes.remove(integer);
-					}
-				}
+				Aldeoes.remove(Comandos.Aldeoes.indexOf(aldeao));
+				Mostrar.mostrarAldeao(aldeao+1, "Pronto");
 			}else {
 				View.exibirMensagemErro("Erro", "Aldeão Livre");
 			}
