@@ -9,7 +9,7 @@ import uteis.View;
 public class Comandos {
 	public static ArrayList<Integer> Aldeoes = new ArrayList<Integer>();
 	public static boolean isTemplo = false;
-	public static EvolucoesTemplo evolucaoTemplo = new EvolucoesTemplo();
+	public static EvolucoesTemplo evolucoesTemplo = new EvolucoesTemplo();
 	public static EvolucoesPrefeitura evolucoesPrefeitura = new EvolucoesPrefeitura();
 	
 	public static void comandoAldeaoParar(int aldeao) {
@@ -245,30 +245,40 @@ public class Comandos {
 	public static void comandoPrefeituraCriarAldeao() {
 		int valor = Integer.parseInt(Principal.lblComida.getText());
 		Aldeao aldeao;
-		if(valor>=100) { // Criação do aldeão
-			aldeao = new Aldeao();
-			Thread threadAldeao = new Thread(aldeao);
-			threadAldeao.start();
-			Mostrar.mostrarComida(valor-100);
+		if(Comandos.evolucaoPrefeitura == "Evolução de aldeão") {
+			View.exibirMensagemErro("ERROR", "Aldeões se encontram em evolução, indiponivel para criação");
 		}else {
-			View.exibirMensagemErro("Erro", "Falta Comida");
+	
+			if(valor>=100) { // Criação do aldeão
+				aldeao = new Aldeao();
+				Thread threadAldeao = new Thread(aldeao);
+				threadAldeao.start();
+				Mostrar.mostrarComida(valor-100);
+			}else {
+				View.exibirMensagemErro("Erro", "Falta Comida");
+			}
 		}
 	}
 
-
+	public static String evolucaoTemplo;
 	public static void comandoTemploEvoluir(String strEvolucao) {
 		if(isTemplo==false) {
 			View.exibirMensagemErro("Erro", "Não possui Templo");
 		}else {
-			evolucaoTemplo.evoluir(strEvolucao);
+			evolucaoTemplo = strEvolucao;
+			Thread threadEvoluir = new Thread (evolucoesTemplo);
+			threadEvoluir.start();
 		}
 	}
 	
 	public static void comandoTemploLancar() { //Segunda parte
 		System.out.println("comandoTemploLancar();");
 	}
-
+	
+	public static String evolucaoPrefeitura;
 	public static void comandoPrefeituraEvoluir(String strEvolucao) {
-		System.out.println(strEvolucao);
+		Comandos.evolucaoPrefeitura = strEvolucao;
+		Thread threadEvoluir = new Thread (evolucoesPrefeitura);
+		threadEvoluir.start();
 	}
 }

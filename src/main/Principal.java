@@ -38,20 +38,60 @@ public class Principal extends JFrame {
 	//Aldeao
 	static JTable tblAldeoes;
 	public static DefaultTableModel tmAldeoes;
+	static JButton btnAldeaoParar;
+	static JButton btnAldeaoConstruir;
+	static JButton btnAldeaoCultivar;
+	static JButton btnAldeaoMinerar;
+	static JButton btnAldeaoOrar;
+	static JButton btnAldeaoSacrificar;
 	//Fazenda
 	static JComboBox<String> cbFazenda;
-	static JTable tblFazendas;
+	public static JTable tblFazendas;
 	static DefaultTableModel tmFazendas;
 	//Mina de Ouro
 	static JComboBox<String> cbMinaOuro;
-	static JTable tblMinasOuro;
+	public static JTable tblMinasOuro;
 	static DefaultTableModel tmMinasOuro;
 	//Prefeitura
 	static String acaoPrefeitura;
 	static JTextField tfPrefeitura;
+	public static int aldeao;
+	public static int fazenda;
+	public static int mina;
+	public static JProgressBar lvlAldeao;
+	public static JProgressBar lvlFazenda;
+	public static JProgressBar lvlMina;
+	static JLabel lblAldeao;
+	static JLabel lblFazenda;
+	static JLabel lblMina;
+	static JProgressBar tfPrefeituraBar;
 	public static JLabel lblComida;
 	public static JLabel lblOuro;
+	static JButton btnPrefeituraCriarAldeao;
+	static JButton btnPrefeituraEvoluir;
 	//Templo
+		//ATK
+	public static int Garfanhoto;
+	public static int Primogenitos;
+	public static int chuvaPedras;
+	public static JProgressBar lvlGarfanhoto;
+	public static JProgressBar lvlPrimogenitos;
+	public static JProgressBar lvlchuvaPedras;
+	static JLabel lblGarfanhoto;
+	static JLabel lblPrimogenitos;
+	static JLabel lblChuvaPedras;
+		//Defesa
+	public static int protecaoGarfanhoto;
+	public static int protecaoPrimogenitos;
+	public static int protecaoChuvaPedras;
+	public static JProgressBar lvlprotecaoGarfanhoto;
+	public static JProgressBar lvlprotecaoPrimogenitos;
+	public static JProgressBar lvlprotecaoChuvaPedras;
+	static JLabel lblprotecaoGarfanhoto;
+	static JLabel lblprotecaoPrimogenitos;
+	static JLabel lblprotecaoChuvaPedras;
+	//
+	static JProgressBar tfTemploBar;
 	static JPanel pnTemplo;
 	static JPanel pnOferenda;
 	public static JLabel lblOferenda;
@@ -80,10 +120,10 @@ public class Principal extends JFrame {
         initialize();
         IniciarVila.iniciarVila();
 		try {
-			String nome = View.inserirNome();
-			String civilizacao = View.civilizacao();
-	        Principal.lblJogador.setText(nome +" - "+ civilizacao);
-			//lblJogador.setText("A" +" - "+ "TEST");
+			//String nome = View.inserirNome();
+			//String civilizacao = View.civilizacao();
+	        //Principal.lblJogador.setText(nome +" - "+ civilizacao);
+			lblJogador.setText("A" +" - "+ "TEST");
 		} catch (Exception e) {
 			View.exibirMensagem(e.getMessage());
 		}
@@ -115,6 +155,9 @@ public class Principal extends JFrame {
 					case "Orando":
 						setBackground(new Color(135, 206, 235));
 						break;
+					case "Evoluindo":
+						setBackground(Color.GREEN);
+						break;
 					case "Sacrificado":
 						setBackground(Color.RED);
 						break;
@@ -136,11 +179,11 @@ public class Principal extends JFrame {
 			public void setValue(Object valor) {
 				String v=valor.toString();
 				switch (v) {							
-					case "Parada":
-						setBackground(Color.WHITE);
+					case "Disponivel":
+						setBackground(Color.GREEN);
 						break;
 					case "Colhendo":
-						setBackground(Color.GREEN);
+						setBackground(Color.green);
 						break;
 					case "Minerando":
 						setBackground(Color.YELLOW);
@@ -206,12 +249,12 @@ public class Principal extends JFrame {
 		spAldeoes.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnAldeao.add(spAldeoes);
 
-		JButton btnAldeaoParar = new JButton("Parar");
-		btnAldeaoParar.setBounds(10, 485, 120, 21);
+		Principal.btnAldeaoParar = new JButton("Parar");
+		Principal.btnAldeaoParar.setBounds(10, 485, 120, 21);
 		pnAldeao.add(btnAldeaoParar);
 
-		JButton btnAldeaoConstruir = new JButton("Construir");
-		btnAldeaoConstruir.setBounds(10, 510, 120, 21);
+		Principal.btnAldeaoConstruir = new JButton("Construir");
+		Principal.btnAldeaoConstruir.setBounds(10, 510, 120, 21);
 		pnAldeao.add(btnAldeaoConstruir);
 
 		JComboBox<String> cbConstruir = new JComboBox<String>();
@@ -222,28 +265,28 @@ public class Principal extends JFrame {
 		cbConstruir.addItem("Maravilha");
 		pnAldeao.add(cbConstruir);
 
-		JButton btnAldeaoCultivar = new JButton("Cultivar");
-		btnAldeaoCultivar.setBounds(10, 535, 120, 21);
+		Principal.btnAldeaoCultivar = new JButton("Cultivar");
+		Principal.btnAldeaoCultivar.setBounds(10, 535, 120, 21);
 		pnAldeao.add(btnAldeaoCultivar);
 
 		Principal.cbFazenda = new JComboBox<String>();
 		cbFazenda.setBounds(140, 535, 119, 21);
 		pnAldeao.add(cbFazenda);
 
-		JButton btnAldeaoMinerar = new JButton("Minerar");
-		btnAldeaoMinerar.setBounds(10, 560, 120, 21);
+		Principal.btnAldeaoMinerar = new JButton("Minerar");
+		Principal.btnAldeaoMinerar.setBounds(10, 560, 120, 21);
 		pnAldeao.add(btnAldeaoMinerar);
 
 		Principal.cbMinaOuro = new JComboBox<String>();
 		cbMinaOuro.setBounds(140, 560, 119, 21);
 		pnAldeao.add(cbMinaOuro);
 
-		JButton btnAldeaoOrar = new JButton("Orar");
-		btnAldeaoOrar.setBounds(10, 585, 120, 21);
+		Principal.btnAldeaoOrar = new JButton("Orar");
+		Principal.btnAldeaoOrar.setBounds(10, 585, 120, 21);
 		pnAldeao.add(btnAldeaoOrar);
 
-		JButton btnAldeaoSacrificar = new JButton("Sacrificar");
-		btnAldeaoSacrificar.setBounds(140, 585, 120, 21);
+		Principal.btnAldeaoSacrificar = new JButton("Sacrificar");
+		Principal.btnAldeaoSacrificar.setBounds(140, 585, 120, 21);
 		pnAldeao.add(btnAldeaoSacrificar);
 
 		JPanel pnFazenda = new JPanel();
@@ -302,7 +345,7 @@ public class Principal extends JFrame {
 		spMinas.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnMinaOuro.add(spMinas);
 
-		JPanel pnPrefeitura = new JPanel();
+		JLabel pnPrefeitura = new JLabel();
 		pnPrefeitura.setLayout(null);
 		pnPrefeitura.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), acaoPrefeitura, TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnPrefeitura.setBounds(570, 10, 270, 175);
@@ -332,9 +375,50 @@ public class Principal extends JFrame {
 		tfPrefeitura.setBounds(10, 65, 250, 20);
 		Principal.tfPrefeitura.setEditable(false);
 		pnPrefeitura.add(tfPrefeitura);
+		
+		// level Aldeao
+		Principal.lblAldeao = new JLabel();
+		Principal.lblAldeao.setBounds(115, 90, 20, 20);
+		Principal.lblAldeao.setIcon(new ImageIcon(Principal.class.getResource("/img/aldeao.png")));
+		Principal.lblAldeao.setEnabled(true);
+		pnPrefeitura.add(lblAldeao);
 
-		JButton btnPrefeituraCriarAldeao = new JButton("Criar aldeão");
-		btnPrefeituraCriarAldeao.setBounds(10, 90, 128, 21);
+		Principal.lvlAldeao = new JProgressBar();
+		Principal.lvlAldeao.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlAldeao.setMaximum(10);
+		Principal.lvlAldeao.setStringPainted(true);
+		Principal.lvlAldeao.setBounds(136, 90, 30, 20);
+		pnPrefeitura.add(lvlAldeao);
+		// level Fazenda
+		Principal.lblFazenda = new JLabel();
+		Principal.lblFazenda.setBounds(163, 90, 20, 20);
+		Principal.lblFazenda.setIcon(new ImageIcon(Principal.class.getResource("/img/fazenda.png")));
+		Principal.lblFazenda.setEnabled(true);
+		pnPrefeitura.add(lblFazenda);
+		
+		Principal.lvlFazenda = new JProgressBar();
+		Principal.lvlFazenda.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlFazenda.setMaximum(10);
+		Principal.lvlFazenda.setStringPainted(true);
+		Principal.lvlFazenda.setBounds(184, 90, 30, 20);
+		pnPrefeitura.add(lvlFazenda);
+		// level Mina
+		Principal.lblMina = new JLabel();
+		Principal.lblMina.setBounds(211, 90, 20, 20);
+		Principal.lblMina.setIcon(new ImageIcon(Principal.class.getResource("/img/mina.png")));
+		Principal.lblMina.setEnabled(true);
+		pnPrefeitura.add(lblMina);
+		
+		Principal.lvlMina = new JProgressBar();
+		Principal.lvlMina.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlMina.setMaximum(10);
+		Principal.lvlMina.setStringPainted(true);
+		Principal.lvlMina.setBounds(232, 90, 30, 20);
+		pnPrefeitura.add(lvlMina);
+		//----//
+		//Botão Cria aldeao
+		Principal.btnPrefeituraCriarAldeao = new JButton("Criar aldeão");
+		Principal.btnPrefeituraCriarAldeao.setBounds(10, 90, 103, 21);
 		pnPrefeitura.add(btnPrefeituraCriarAldeao);
 
 		JComboBox<String> cbPrefeituraEvolucoes = new JComboBox<String>();
@@ -344,9 +428,18 @@ public class Principal extends JFrame {
 		cbPrefeituraEvolucoes.addItem("Evolução de mina de ouro");
 		pnPrefeitura.add(cbPrefeituraEvolucoes);
 
-		JButton btnPrefeituraEvoluir = new JButton("Evoluir");
+		Principal.btnPrefeituraEvoluir = new JButton("Evoluir");
 		btnPrefeituraEvoluir.setBounds(131, 140, 128, 21);
 		pnPrefeitura.add(btnPrefeituraEvoluir);
+		
+		Principal.tfPrefeituraBar = new JProgressBar();
+		Principal.tfPrefeituraBar.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.tfPrefeituraBar.setBounds(10, 140, 120, 21);
+		Principal.tfPrefeituraBar.setMaximum(100);
+		Principal.tfPrefeituraBar.setStringPainted(true);
+		Principal.tfPrefeituraBar.setEnabled(false);
+		pnPrefeitura.add(tfPrefeituraBar);
+		
 		//Templo
 		Principal.pnTemplo = new JPanel();
 		Principal.pnTemplo.setLayout(null);
@@ -354,27 +447,22 @@ public class Principal extends JFrame {
 		Principal.pnTemplo.setBounds(570, 195, 270, 225);
 		Principal.pnTemplo.setEnabled(false);
 		pnTP_Vila.add(Principal.pnTemplo);
-
+		//Oferenda de fã
 		Principal.pnOferenda = new JPanel();
 		((FlowLayout) Principal.pnOferenda.getLayout()).setAlignment(FlowLayout.LEFT);
 		Principal.pnOferenda.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Oferendas de fã", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		Principal.pnOferenda.setBounds(8, 15, 255, 45);
 		Principal.pnOferenda.setEnabled(false);
 		Principal.pnTemplo.add(Principal.pnOferenda);
-
+		//Tela do Templo
 		Principal.lblOferenda = new JLabel("0");
 		Principal.lblOferenda.setHorizontalAlignment(SwingConstants.LEFT);
 		Principal.lblOferenda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		Principal.lblOferenda.setEnabled(false);
 		Principal.pnOferenda.add(Principal.lblOferenda);
-
-		Principal.tfTemplo = new JTextField();
-		Principal.tfTemplo.setEditable(false);
-		Principal.tfTemplo.setBounds(10, 65, 250, 20);
-		Principal.pnTemplo.add(Principal.tfTemplo);
-
+		//Tipos de evolução
 		Principal.cbTEmploEvolucoes = new JComboBox<String>();
-		Principal.cbTEmploEvolucoes.setBounds(10, 90, 248, 21);
+		Principal.cbTEmploEvolucoes.setBounds(10, 65, 250, 20);
 		Principal.cbTEmploEvolucoes.addItem("Nuvem de gafanhotos");
 		Principal.cbTEmploEvolucoes.addItem("Morte dos primogénitos");
 		Principal.cbTEmploEvolucoes.addItem("Chuva de pedras");
@@ -383,22 +471,105 @@ public class Principal extends JFrame {
 		Principal.cbTEmploEvolucoes.addItem("Proteção contra chuva de pedras");
 		Principal.cbTEmploEvolucoes.setEnabled(false);
 		Principal.pnTemplo.add(Principal.cbTEmploEvolucoes);
-
+		//--------------------------------------------------------------------------------//
+		//Level Nuvem de gafanhotos
+		Principal.lblGarfanhoto = new JLabel();
+		Principal.lblGarfanhoto.setBounds(10, 115, 20, 20);
+		Principal.lblGarfanhoto.setIcon(new ImageIcon(Principal.class.getResource("/img/garfanhoto.png")));
+		Principal.lblGarfanhoto.setEnabled(true);
+		pnTemplo.add(lblGarfanhoto);
+		Principal.lvlGarfanhoto = new JProgressBar();
+		Principal.lvlGarfanhoto.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlGarfanhoto.setMaximum(10);
+		Principal.lvlGarfanhoto.setStringPainted(true);
+		Principal.lvlGarfanhoto.setBounds(30, 115, 30, 20);
+		pnTemplo.add(lvlGarfanhoto);
+		//Level Morte dos primogénitos
+		Principal.lblPrimogenitos = new JLabel();
+		Principal.lblPrimogenitos.setBounds(60, 115, 20, 20);
+		Principal.lblPrimogenitos.setIcon(new ImageIcon(Principal.class.getResource("/img/primogenitos.png")));
+		Principal.lblPrimogenitos.setEnabled(true);
+		pnTemplo.add(lblPrimogenitos);
+		Principal.lvlPrimogenitos = new JProgressBar();
+		Principal.lvlPrimogenitos.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlPrimogenitos.setMaximum(10);
+		Principal.lvlPrimogenitos.setStringPainted(true);
+		Principal.lvlPrimogenitos.setBounds(80, 115, 30, 20);
+		pnTemplo.add(lvlPrimogenitos);
+		//Level Chuva de pedras
+		Principal.lblChuvaPedras = new JLabel();
+		Principal.lblChuvaPedras.setBounds(110, 115, 20, 20);
+		Principal.lblChuvaPedras.setIcon(new ImageIcon(Principal.class.getResource("/img/pedras.png")));
+		Principal.lblChuvaPedras.setEnabled(true);
+		pnTemplo.add(lblChuvaPedras);
+		Principal.lvlchuvaPedras = new JProgressBar();
+		Principal.lvlchuvaPedras.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlchuvaPedras.setMaximum(10);
+		Principal.lvlchuvaPedras.setStringPainted(true);
+		Principal.lvlchuvaPedras.setBounds(130, 115, 30, 20);
+		pnTemplo.add(lvlchuvaPedras);
+		//--------------------------------------------------------------------------------//
+		//Level Proteção contra nuvem de gafanhotos
+		Principal.lblprotecaoGarfanhoto = new JLabel();
+		Principal.lblprotecaoGarfanhoto.setBounds(10, 90, 20, 20);
+		Principal.lblprotecaoGarfanhoto.setIcon(new ImageIcon(Principal.class.getResource("/img/ProtecaoGarfanhotos.png")));
+		Principal.lblprotecaoGarfanhoto.setEnabled(true);
+		pnTemplo.add(lblprotecaoGarfanhoto);
+		Principal.lvlprotecaoGarfanhoto = new JProgressBar();
+		Principal.lvlprotecaoGarfanhoto.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlprotecaoGarfanhoto.setMaximum(10);
+		Principal.lvlprotecaoGarfanhoto.setStringPainted(true);
+		Principal.lvlprotecaoGarfanhoto.setBounds(30, 90, 30, 20);
+		pnTemplo.add(lvlprotecaoGarfanhoto);
+		//Level Proteção contra morte dos primogénitos
+		Principal.lblprotecaoPrimogenitos = new JLabel();
+		Principal.lblprotecaoPrimogenitos.setBounds(60, 90, 20, 20);
+		Principal.lblprotecaoPrimogenitos.setIcon(new ImageIcon(Principal.class.getResource("/img/ProtecaoPrimogenitos.png")));
+		Principal.lblprotecaoPrimogenitos.setEnabled(true);
+		pnTemplo.add(lblprotecaoPrimogenitos);
+		Principal.lvlprotecaoPrimogenitos = new JProgressBar();
+		Principal.lvlprotecaoPrimogenitos.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlprotecaoPrimogenitos.setMaximum(10);
+		Principal.lvlprotecaoPrimogenitos.setStringPainted(true);
+		Principal.lvlprotecaoPrimogenitos.setBounds(80, 90, 30, 20);
+		pnTemplo.add(lvlprotecaoPrimogenitos);
+		//Level Proteção contra chuva de pedras
+		Principal.lblprotecaoChuvaPedras = new JLabel();
+		Principal.lblprotecaoChuvaPedras.setBounds(110, 90, 20, 20);
+		Principal.lblprotecaoChuvaPedras.setIcon(new ImageIcon(Principal.class.getResource("/img/ProtecaoPedras.png")));
+		Principal.lblprotecaoChuvaPedras.setEnabled(true);
+		pnTemplo.add(lblprotecaoChuvaPedras);
+		Principal.lvlprotecaoChuvaPedras = new JProgressBar();
+		Principal.lvlprotecaoChuvaPedras.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.lvlprotecaoChuvaPedras.setMaximum(10);
+		Principal.lvlprotecaoChuvaPedras.setStringPainted(true);
+		Principal.lvlprotecaoChuvaPedras.setBounds(130, 90, 30, 20);
+		pnTemplo.add(lvlprotecaoChuvaPedras);
+		//--------------------------------------------------------------------------------//
+		//Botão evoluir
 		Principal.btnTemploEvoluir = new JButton("Evoluir");
-		Principal.btnTemploEvoluir.setBounds(131, 115, 128, 21);
+		Principal.btnTemploEvoluir.setBounds(160, 115, 100, 20);
 		Principal.btnTemploEvoluir.setEnabled(false);
 		Principal.pnTemplo.add(Principal.btnTemploEvoluir);
-
+		//Barra de processão 
+		Principal.tfTemploBar = new JProgressBar();
+		Principal.tfTemploBar.setOrientation(SwingConstants.HORIZONTAL);
+		Principal.tfTemploBar.setBounds(160, 90, 100, 20);
+		Principal.tfTemploBar.setMaximum(100);
+		Principal.tfTemploBar.setStringPainted(true);
+		Principal.tfTemploBar.setEnabled(false);
+		pnTemplo.add(tfTemploBar);
+		//SEGUNDA PARTE
 		Principal.cbTemploLancamentos = new JComboBox<String>();
 		Principal.cbTemploLancamentos.setBounds(10, 140, 248, 21);
 		Principal.cbTemploLancamentos.setEnabled(false);
 		Principal.pnTemplo.add(Principal.cbTemploLancamentos);
-
+		//SEGUNDA PARTE
 		Principal.cbTemploInimigo = new JComboBox<String>();
 		Principal.cbTemploInimigo.setEnabled(false);
 		Principal.cbTemploInimigo.setBounds(10, 165, 248, 21);
 		Principal.pnTemplo.add(Principal.cbTemploInimigo);
-
+		//SEGUNDA PARTE
 		Principal.btnTemploLancar = new JButton("Lançar");
 		Principal.btnTemploLancar.setBounds(131, 190, 128, 21);
 		Principal.btnTemploLancar.setEnabled(false);

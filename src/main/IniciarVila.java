@@ -8,12 +8,12 @@ public class IniciarVila {
 			Mostrar.adicionarAldeao(""+i, "Pronto");
 		}
 		
-		Mostrar.adicionarFazenda("1", "Fazenda");
+		Mostrar.adicionarFazenda("1", "Disponivel");
 		
-		Mostrar.adicionarMinaOuro("1", "Mina");
+		Mostrar.adicionarMinaOuro("1", "Disponivel");
 		
-		Mostrar.mostrarComida(150);
-		Mostrar.mostrarOuro(500);
+		Mostrar.mostrarComida(15000);
+		Mostrar.mostrarOuro(50000);
 		
 		
 		Mostrar.mostrarPrefeitura("Prefeitura", Color.ORANGE);

@@ -29,7 +29,7 @@ public class MinaDeOuro implements Runnable{
 		Mostrar.adicionarMinaOuro(""+mina, "Tempo de criação [40s]");
 		try {
 			Thread.sleep(4000);//30000
-			Mostrar.mostrarMinaOuro(mina, "Parada");
+			Mostrar.mostrarMinaOuro(mina, "Disponivel");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
 			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirMinaDeOuro));
@@ -53,8 +53,6 @@ public class MinaDeOuro implements Runnable{
 					e.printStackTrace();
 				}
 			}else {
-				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
-				Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Parada");
 				continuar = false;	
 			}
 		}

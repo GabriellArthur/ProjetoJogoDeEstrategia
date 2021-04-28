@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.Color;
-
 /*
 Templo
 Custo: comida=2.000 + ouro=2.000 (pré-pago)
@@ -45,7 +43,6 @@ public class Templo implements Runnable{
 			Thread.sleep(1000);//10000
 			Mostrar.mostrarOferendaFe(50000);
 			Mostrar.habilitarTemplo();
-			Mostrar.mostrarTemplo("Templo Criado", Color.MAGENTA);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

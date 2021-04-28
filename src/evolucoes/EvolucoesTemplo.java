@@ -1,14 +1,12 @@
 package evolucoes;
 
-import java.awt.Color;
-
 import main.Comandos;
 import main.Mostrar;
 import main.Principal;
 import uteis.View;
 //Limite de evolucao
 //
-public class EvolucoesTemplo {
+public class EvolucoesTemplo implements Runnable{
 	int Garfanhoto;
 	int Primogenitos;
 	int chuvaPedras;
@@ -25,6 +23,227 @@ public class EvolucoesTemplo {
 		this.protecaoChuvaPedras=0;
 	}
 	
+	@Override
+	public void run() {
+		switch (Comandos.evolucaoTemplo) {
+			case "Nuvem de gafanhotos":
+				this.evoluirGarfanhoto();
+				break;
+			case "Morte dos primogénitos":
+				this.evoluirPrimogenitos();
+				break;
+			case "Chuva de pedras":
+				this.evoluirPedra();
+				break;
+			case "Proteção contra nuvem de gafanhotos":
+				this.evoluirProtecaoGarfanhoto();
+				break;
+			case "Proteção contra morte dos primogénitos":
+				this.evoluirProtecaoPrimogenitos();
+				break;
+			case "Proteção contra chuva de pedras":
+				this.evoluirProtecaoPedra();
+				break;
+		}
+		
+	}
+	
+	public void evoluirGarfanhoto() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getGarfanhoto()<10) {
+			if(fe>=1000) {
+				fe = fe - 1000;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoGarfanhoto();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlGarfanhoto.setValue(getGarfanhoto());
+			}else if(Comandos.evolucoesTemplo.getPrimogenitos()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos] para o level "+Comandos.evolucoesTemplo.getGarfanhoto()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+	}
+	public void evoluirPrimogenitos() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getPrimogenitos()<10) {
+			if(fe>=1500) {
+				fe = fe - 1500;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoPrimogenitos();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlPrimogenitos.setValue(getPrimogenitos());
+			}else if(Comandos.evolucoesTemplo.getPrimogenitos()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos] para o level "+Comandos.evolucoesTemplo.getPrimogenitos()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+	}
+	public void evoluirPedra() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getChuvaPedras()<10) {
+			if(fe>=2000) {
+				fe = fe - 2000;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoChuvaPedras();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlchuvaPedras.setValue(getChuvaPedras());
+			}else if(Comandos.evolucoesTemplo.getChuvaPedras()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras] para o level "+Comandos.evolucoesTemplo.getChuvaPedras()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+	}
+	public void evoluirProtecaoGarfanhoto() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getProtecaoGarfanhoto()<10) {
+			if(fe>=5000) {
+				fe = fe - 5000;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoProtecaoGarfanhoto();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlprotecaoGarfanhoto.setValue(getProtecaoGarfanhoto());
+			}else if(Comandos.evolucoesTemplo.getProtecaoGarfanhoto()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos] para o level "+Comandos.evolucoesTemplo.getProtecaoGarfanhoto()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+		
+	}
+	public void evoluirProtecaoPrimogenitos() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getProtecaoPrimogenitos()<10) {
+			if(fe>=6000) {
+				fe = fe - 6000;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoProtecaoPrimogenitos();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlprotecaoPrimogenitos.setValue(getProtecaoPrimogenitos());
+			}else if(Comandos.evolucoesTemplo.getProtecaoPrimogenitos()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos] para o level "+Comandos.evolucoesTemplo.getProtecaoPrimogenitos()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+		
+	}
+	public void evoluirProtecaoPedra() {
+		int fe = Integer.parseInt(Principal.lblOferenda.getText());
+		if(Comandos.evolucoesTemplo.getProtecaoChuvaPedras()<10) {
+			if(fe>=7000) {
+				fe = fe - 7000;
+				Mostrar.desabilitarOpcaoEvoluir();
+				//------------------------//
+				int porcentagem = 0;
+				while(porcentagem!=100) {
+					try {
+						Thread.sleep(100);
+						porcentagem++;
+						Mostrar.mostrarEvolucao(porcentagem);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//------------------------//
+				Mostrar.mostrarOferendaFe(fe);
+				Comandos.evolucoesTemplo.evolucaoProtecaoChuvaPedras();
+				Mostrar.habilitarOpcaoEvoluir();
+				Comandos.evolucaoTemplo = "";
+				Principal.lvlprotecaoChuvaPedras.setValue(getProtecaoChuvaPedras());
+			}else if(Comandos.evolucoesTemplo.getProtecaoChuvaPedras()==0){
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
+			}else {
+				View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos] para o level "+Comandos.evolucoesTemplo.getProtecaoChuvaPedras()+1);
+			}	
+		}else {
+			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+		}
+		
+	}
+	//---------------------------//
 	public void evolucaoGarfanhoto() {
 		if(this.Garfanhoto<=9)
 			this.Garfanhoto++;
@@ -74,107 +293,5 @@ public class EvolucoesTemplo {
 		return protecaoChuvaPedras;
 	}
 	
-	public void evoluir(String nome) {
-		int fe = Integer.parseInt(Principal.lblOferenda.getText());
-		switch (nome) {
-			case "Nuvem de gafanhotos":
-				if(Comandos.evolucaoTemplo.getGarfanhoto()<10) {
-					if(fe>=1000) {
-						fe = fe - 1000;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoGarfanhoto();
-						Mostrar.mostrarTemplo("Nuvem de gafanhotos["+Comandos.evolucaoTemplo.getGarfanhoto()+"]", Color.RED);
-					}else if(Comandos.evolucaoTemplo.getPrimogenitos()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos] para o level "+Comandos.evolucaoTemplo.getGarfanhoto()+1);
-					}	
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-
-				break;
-			case "Morte dos primogénitos":
-				if(Comandos.evolucaoTemplo.getPrimogenitos()<10) {
-					if(fe>=1500) {
-						fe = fe - 1500;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoPrimogenitos();
-						Mostrar.mostrarTemplo("Morte dos primogénitos["+Comandos.evolucaoTemplo.getPrimogenitos()+"]", Color.RED);
-					}else if(Comandos.evolucaoTemplo.getPrimogenitos()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Morte dos primogénitos] para o level "+Comandos.evolucaoTemplo.getPrimogenitos()+1);
-					}
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-				break;
-			case "Chuva de pedras":
-				if(Comandos.evolucaoTemplo.getChuvaPedras()<10) {
-					if(fe>=2000) {
-						fe = fe - 2000;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoChuvaPedras();
-						Mostrar.mostrarTemplo("Chuva de pedras["+Comandos.evolucaoTemplo.getChuvaPedras()+"]", Color.RED);
-					}else if(Comandos.evolucaoTemplo.getChuvaPedras()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Chuva de pedras] para o level "+Comandos.evolucaoTemplo.getChuvaPedras()+1);
-					}
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-				break;
-			case "Proteção contra nuvem de gafanhotos":
-				if(Comandos.evolucaoTemplo.getProtecaoGarfanhoto()<10) {
-					if(fe>=5000) {
-						fe = fe - 5000;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoProtecaoGarfanhoto();
-						Mostrar.mostrarTemplo("[Proteção] Nuvem de gafanhotos["+Comandos.evolucaoTemplo.getProtecaoGarfanhoto()+"]", Color.GREEN);
-					}else if(Comandos.evolucaoTemplo.getProtecaoGarfanhoto()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra nuvem de gafanhotos] para o level "+Comandos.evolucaoTemplo.getProtecaoGarfanhoto()+1);
-					}
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-				break;
-			case "Proteção contra morte dos primogénitos":
-				if(Comandos.evolucaoTemplo.getProtecaoPrimogenitos()<10) {
-					if(fe>=6000) {
-						fe = fe - 6000;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoProtecaoPrimogenitos();
-						Mostrar.mostrarTemplo("[Proteção] Morte dos primogénitos["+Comandos.evolucaoTemplo.getProtecaoPrimogenitos()+"]", Color.GREEN);
-					}else  if(Comandos.evolucaoTemplo.getProtecaoPrimogenitos()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra morte dos primogénitos]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra morte dos primogénitos] para o level "+Comandos.evolucaoTemplo.getProtecaoPrimogenitos()+1);
-					}	
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-				break;
-			case "Proteção contra chuva de pedras":
-				if(Comandos.evolucaoTemplo.getProtecaoChuvaPedras()<10) {
-					if(fe>=7000) {
-						fe = fe - 7000;
-						Mostrar.mostrarOferendaFe(fe);
-						Comandos.evolucaoTemplo.evolucaoProtecaoChuvaPedras();
-						Mostrar.mostrarTemplo("[Proteção] Chuva de Pedras["+Comandos.evolucaoTemplo.getProtecaoChuvaPedras()+"]", Color.GREEN);
-					}else if(Comandos.evolucaoTemplo.getProtecaoChuvaPedras()==0){
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra chuva de pedras]");
-					}else {
-						View.exibirMensagemErro("Erro", "Não possui fé para [Proteção contra chuva de pedras] para o level "+Comandos.evolucaoTemplo.getProtecaoChuvaPedras()+1);
-					}
-				}else {
-					View.exibirMensagemErro("Error", "Evolução já está no maximo");
-				}
-				break;
-		}
-	}
 	
 }

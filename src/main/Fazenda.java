@@ -29,7 +29,7 @@ public class Fazenda implements Runnable {
 		Mostrar.adicionarFazenda(""+fazenda, "Tempo de criação[30s]");
 		try {
 			Thread.sleep(3000);//30000
-			Mostrar.mostrarFazenda(fazenda, "Parada");
+			Mostrar.mostrarFazenda(fazenda, "Disponivel");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
 			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirFazenda));
@@ -53,8 +53,6 @@ public class Fazenda implements Runnable {
 					e.printStackTrace();
 				}
 			}else {
-				Mostrar.mostrarAldeao(Comandos.comandoAldeaoCultivarFazenda+1, "Pronto");
-				Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Parada");
 				continuar = false;
 			}
 		}

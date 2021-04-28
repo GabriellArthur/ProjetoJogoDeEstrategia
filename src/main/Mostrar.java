@@ -13,6 +13,7 @@ public class Mostrar {
 
 	public static void mostrarAldeao(int aldeao, String acao) {
 		Principal.tblAldeoes.setValueAt(acao, aldeao-1, 1);
+		
 	}
 
 	public static void adicionarFazenda(String numero, String aldeoes) {
@@ -51,21 +52,74 @@ public class Mostrar {
 		Principal.tfPrefeitura.setText(acao);
 		Principal.tfPrefeitura.setBackground(cor);
 	}
+	
+	public static void desabilitarOpcaoEvoluir() {
+		Principal.btnTemploEvoluir.setEnabled(false);
+	}
+	public static void habilitarOpcaoEvoluir() {
+		Principal.btnTemploEvoluir.setEnabled(true);
+	}
+	
+	public static void desabilitarOpcoesEvolucao(String tipo) {
+		switch (tipo) {
+		case "Todos":
+			Principal.btnPrefeituraCriarAldeao.setEnabled(false);
+			Principal.btnAldeaoParar.setEnabled(false);
+			Principal.btnAldeaoConstruir.setEnabled(false);
+			Principal.btnAldeaoCultivar.setEnabled(false);
+			Principal.btnAldeaoMinerar.setEnabled(false);
+			Principal.btnAldeaoOrar.setEnabled(false);
+			Principal.btnAldeaoSacrificar.setEnabled(false);	
+			Principal.btnPrefeituraEvoluir.setEnabled(false);
+			break;
+		case "Fazenda":
+			Principal.btnAldeaoCultivar.setEnabled(false);
+			Principal.btnPrefeituraEvoluir.setEnabled(false);
+			break;
+		case "Mina":
+			Principal.btnAldeaoMinerar.setEnabled(false);
+			Principal.btnPrefeituraEvoluir.setEnabled(false);
+			break;
+		}
+	}
+	
+	public static void habilitarOpcoesEvolucao(String tipo) {
+		switch (tipo) {
+		case "Todos":
+			Principal.btnPrefeituraCriarAldeao.setEnabled(true);
+			Principal.btnAldeaoParar.setEnabled(true);
+			Principal.btnAldeaoConstruir.setEnabled(true);
+			Principal.btnAldeaoCultivar.setEnabled(true);
+			Principal.btnAldeaoMinerar.setEnabled(true);
+			Principal.btnAldeaoOrar.setEnabled(true);
+			Principal.btnAldeaoSacrificar.setEnabled(true);	
+			Principal.btnPrefeituraEvoluir.setEnabled(true);
+			break;
+		case "Fazenda":
+			Principal.btnAldeaoCultivar.setEnabled(true);
+			Principal.btnPrefeituraEvoluir.setEnabled(true);
+			break;
+		case "Mina":
+			Principal.btnAldeaoMinerar.setEnabled(true);
+			Principal.btnPrefeituraEvoluir.setEnabled(true);
+			break;
+		}
+	}
 
 	public static void desabilitarhabilitarTemplo() {
-			Principal.pnTemplo.setEnabled(false);
-			Principal.pnOferenda.setEnabled(false);
-			Principal.lblOferenda.setEnabled(false);
-			Principal.cbTEmploEvolucoes.setEnabled(false);
-			Principal.btnTemploEvoluir.setEnabled(false);	
+		Principal.pnTemplo.setEnabled(false);
+		Principal.pnOferenda.setEnabled(false);
+		Principal.lblOferenda.setEnabled(false);
+		Principal.cbTEmploEvolucoes.setEnabled(false);
+		Principal.btnTemploEvoluir.setEnabled(false);	
 	}
 	
 	public static void habilitarTemplo() {
-			Principal.pnTemplo.setEnabled(true);
-			Principal.pnOferenda.setEnabled(true);
-			Principal.lblOferenda.setEnabled(true);
-			Principal.cbTEmploEvolucoes.setEnabled(true);
-			Principal.btnTemploEvoluir.setEnabled(true);
+		Principal.pnTemplo.setEnabled(true);
+		Principal.pnOferenda.setEnabled(true);
+		Principal.lblOferenda.setEnabled(true);
+		Principal.cbTEmploEvolucoes.setEnabled(true);
+		Principal.btnTemploEvoluir.setEnabled(true);
 	}
 
 	public static void habilitarMaravilha() {
@@ -76,6 +130,14 @@ public class Mostrar {
 
 	public static void mostrarMaravilha(int tijolos) {
 		Principal.pbMaravilha.setValue(tijolos);
+	}
+	
+	public static void mostrarPrefeitura(int quantidade) {
+		Principal.tfPrefeituraBar.setValue(quantidade);
+	}
+	
+	public static void mostrarEvolucao(int quantidade) {
+		Principal.tfTemploBar.setValue(quantidade);
 	}
 
 	public static void mostrarAtaques(List<String> evolucoes) {
@@ -92,8 +154,4 @@ public class Mostrar {
 		}
 	}
 
-	public static void mostrarTemplo(String acao, Color cor) {
-		Principal.tfTemplo.setText(acao);
-		Principal.tfTemplo.setBackground(cor);
-	}
 }
