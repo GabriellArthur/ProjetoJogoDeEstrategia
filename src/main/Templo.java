@@ -58,11 +58,17 @@ public class Templo implements Runnable{
 		boolean continuar = true;
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoOrar)) {
+				int tamanho = 0;
+				for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
+					if(Principal.tmAldeoes.getValueAt(i-1,1)=="Orando") {//Pega todos que estão Orando
+						tamanho++;
+					}
+				}
 				try {
 					Mostrar.mostrarAldeao(Comandos.comandoAldeaoOrar+1, "Orando");
 					Thread.sleep(Tempo.tempoPadraoDeOrar);
 					int fe = Integer.parseInt(Principal.lblOferenda.getText());
-					fe = fe+(Comandos.Aldeoes.size()*2);
+					fe = fe+(tamanho*2);
 					Mostrar.mostrarOferendaFe(fe);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
