@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import config.IniciarVila;
 import uteis.View;
 
 import java.awt.Toolkit;
@@ -120,10 +121,9 @@ public class Principal extends JFrame {
         initialize();
         IniciarVila.iniciarVila();
 		try {
-			//String nome = View.inserirNome();
-			//String civilizacao = View.civilizacao();
-	        //Principal.lblJogador.setText(nome +" - "+ civilizacao);
-			lblJogador.setText("A" +" - "+ "TEST");
+			String nome = View.inserirNome();
+			String civilizacao = View.civilizacao();
+	        Principal.lblJogador.setText(nome +" - "+ civilizacao);
 		} catch (Exception e) {
 			View.exibirMensagem(e.getMessage());
 		}

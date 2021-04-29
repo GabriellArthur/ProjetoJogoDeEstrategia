@@ -1,5 +1,6 @@
 package main;
 
+import config.Tempo;
 
 /*
  * Custo: 1000 Comida 
@@ -28,7 +29,7 @@ public class MinaDeOuro implements Runnable{
 		Mostrar.mostrarAldeao(aldeao, "Construindo Mina ["+mina+"]");
 		Mostrar.adicionarMinaOuro(""+mina, "Tempo de criação [40s]");
 		try {
-			Thread.sleep(4000);//30000
+			Thread.sleep(Tempo.tempoDeCriacaoDaMina);
 			Mostrar.mostrarMinaOuro(mina, "Disponivel");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
@@ -43,11 +44,17 @@ public class MinaDeOuro implements Runnable{
 		boolean continuar = true;
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoMinerar)) {
+				int tamanho = 0;
+				for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
+					if(Principal.tmAldeoes.getValueAt(i-1,1)=="Minerando") {
+						tamanho++;
+					}
+				}
 				try {
 					Mostrar.mostrarMinaOuro(Comandos.numeroDaMina+1, "Minerando");
-					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
+					Thread.sleep(Tempo.tempoPadraoDeMinerar-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
 					int ouro = Integer.parseInt(Principal.lblOuro.getText());
-					ouro = ouro+(Comandos.Aldeoes.size()*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
+					ouro = ouro+(tamanho*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
 					Mostrar.mostrarOuro(ouro);
 				} catch (InterruptedException e) {
 					e.printStackTrace();

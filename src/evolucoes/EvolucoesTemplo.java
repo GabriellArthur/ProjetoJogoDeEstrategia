@@ -1,5 +1,6 @@
 package evolucoes;
 
+import config.Tempo;
 import main.Comandos;
 import main.Mostrar;
 import main.Principal;
@@ -58,7 +59,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirGarfanhoto);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {
@@ -90,7 +91,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirPrimogenitos);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {
@@ -122,7 +123,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirPedra);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {
@@ -154,7 +155,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirProtecaoGarfanhoto);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {
@@ -187,7 +188,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirProtecaoPrimogenitos);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {
@@ -220,7 +221,7 @@ public class EvolucoesTemplo implements Runnable{
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(Tempo.evoluirProtecaoPedra);
 						porcentagem++;
 						Mostrar.mostrarEvolucao(porcentagem);
 					} catch (InterruptedException e) {

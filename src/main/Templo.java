@@ -1,5 +1,7 @@
 package main;
 
+import config.Tempo;
+
 /*
 Templo
 Custo: comida=2.000 + ouro=2.000 (pré-pago)
@@ -40,8 +42,8 @@ public class Templo implements Runnable{
 		Mostrar.mostrarAldeao(aldeao, "Construindo Templo");
 		try {
 			Comandos.isTemplo = true;
-			Thread.sleep(1000);//10000
-			Mostrar.mostrarOferendaFe(50000);
+			Thread.sleep(Tempo.tempoDeCriacaoDoTemplo);//10000
+			Mostrar.mostrarOferendaFe(0);
 			Mostrar.habilitarTemplo();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -58,7 +60,7 @@ public class Templo implements Runnable{
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoOrar)) {
 				try {
 					Mostrar.mostrarAldeao(Comandos.comandoAldeaoOrar+1, "Orando");
-					Thread.sleep(3000);
+					Thread.sleep(Tempo.tempoPadraoDeOrar);
 					int fe = Integer.parseInt(Principal.lblOferenda.getText());
 					fe = fe+(Comandos.Aldeoes.size()*2);
 					Mostrar.mostrarOferendaFe(fe);

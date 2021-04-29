@@ -16,17 +16,11 @@ public class View {
 		Object[] itens = { "Acádia", "Babilônia", "Helenística", "Mesopotâmica", "Persa", "Suméria" };
 		Object selectedValue = JOptionPane.showInputDialog(null, "Escolha sua civilização", "Jogador", JOptionPane.INFORMATION_MESSAGE, null,
 				itens, itens[0]);
-		if (selectedValue == null)
-			throw new IllegalArgumentException("Saindoo...");
-		else
-			return selectedValue.toString();
+		return selectedValue.toString();
 	}
 	
 	public static String inserirNome() {
 		String retorno = JOptionPane.showInputDialog(null, "Informe seu nome", "Jogador", JOptionPane.QUESTION_MESSAGE);
-		if (retorno != null)
-			return retorno;
-		else
-			throw new IllegalArgumentException("Saindoo...");
+		return retorno;
 	}
 }

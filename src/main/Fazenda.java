@@ -1,4 +1,7 @@
 package main;
+
+import config.Tempo;
+
 /*
  * Custo: 100 Comida e 500 ouro
  * Função: Produção de comida
@@ -28,7 +31,7 @@ public class Fazenda implements Runnable {
 		Mostrar.mostrarAldeao(aldeao, "Construindo Fazenda ["+fazenda+"]");
 		Mostrar.adicionarFazenda(""+fazenda, "Tempo de criação[30s]");
 		try {
-			Thread.sleep(3000);//30000
+			Thread.sleep(Tempo.tempoDeCriacaoDaFazenda);//30000
 			Mostrar.mostrarFazenda(fazenda, "Disponivel");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
@@ -43,11 +46,17 @@ public class Fazenda implements Runnable {
 		boolean continuar = true;
 		while(continuar) {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoCultivarFazenda)) {
+				int tamanho = 0;
+				for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
+					if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {
+						tamanho++;
+					}
+				}
 				try {
 					int comida = Integer.parseInt(Principal.lblComida.getText());
 					Mostrar.mostrarFazenda(Comandos.numeroDaFazendo+1, "Colhendo");
-					Thread.sleep(3000-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
-					comida = comida+(Comandos.Aldeoes.size()*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
+					Thread.sleep(Tempo.tempoDeCriacaoDaFazenda-(Comandos.evolucoesPrefeitura.getAldeao()*10));//Reduz o tempo de transporte
+					comida = comida+(tamanho*(Comandos.evolucoesPrefeitura.getAldeao()*10));//Aumenta a produtividade
 					Mostrar.mostrarComida(comida);
 				} catch (InterruptedException e) {
 					e.printStackTrace();

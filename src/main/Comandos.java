@@ -154,19 +154,29 @@ public class Comandos {
 		if (aldeao == -1)
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
 		else {
-			if(!Comandos.Aldeoes.contains(aldeao)) {
-				SwitchCultivar = true;
-				numeroDaFazendo = numeroFazenda;
-				Aldeoes.add(aldeao);
-				comandoAldeaoCultivarFazenda = aldeao;
-				Mostrar.mostrarAldeao(aldeao+1, "Cultivando");
-				//
-				Fazenda fazenda;
-				fazenda = new Fazenda();
-				Thread threadFazenda = new Thread(fazenda);
-				threadFazenda.start();
+			int cultivadores=0;
+			for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
+				if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {
+					cultivadores++;
+				}
+			}
+			if(cultivadores < (evolucoesPrefeitura.getFazenda()*5)) {
+				if(!Comandos.Aldeoes.contains(aldeao)) {
+					SwitchCultivar = true;
+					numeroDaFazendo = numeroFazenda;
+					Aldeoes.add(aldeao);
+					comandoAldeaoCultivarFazenda = aldeao;
+					Mostrar.mostrarAldeao(aldeao+1, "Cultivando");
+					//
+					Fazenda fazenda;
+					fazenda = new Fazenda();
+					Thread threadFazenda = new Thread(fazenda);
+					threadFazenda.start();
+				}else {
+					View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+				}
 			}else {
-				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+				View.exibirMensagemErro("Erro", "O limite de Aldeões na fazenda é de: "+evolucoesPrefeitura.getFazenda()*5);
 			}
 		}
 			
@@ -179,19 +189,29 @@ public class Comandos {
 		if(aldeao == -1) {
 			View.exibirMensagemErro("Error", "Escolha um aldeão");
 		}else {
-			if(!Comandos.Aldeoes.contains(aldeao)) {
-				SwitchMinerar = true;
-				numeroDaMina = numeroMinaOuro;
-				comandoAldeaoMinerar = aldeao;
-				Aldeoes.add(aldeao);
-				Mostrar.mostrarAldeao(aldeao+1, "Minerando");
-				
-				MinaDeOuro mina;
-				mina = new MinaDeOuro();
-				Thread threadMina = new Thread(mina);
-				threadMina.start();
+			int cultivadores=0;
+			for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
+				if(Principal.tmAldeoes.getValueAt(i-1,1)=="Minerando") {
+					cultivadores++;
+				}
+			}
+			if(cultivadores < (evolucoesPrefeitura.getMina()*5)) {
+				if(!Comandos.Aldeoes.contains(aldeao)) {
+					SwitchMinerar = true;
+					numeroDaMina = numeroMinaOuro;
+					comandoAldeaoMinerar = aldeao;
+					Aldeoes.add(aldeao);
+					Mostrar.mostrarAldeao(aldeao+1, "Minerando");
+					
+					MinaDeOuro mina;
+					mina = new MinaDeOuro();
+					Thread threadMina = new Thread(mina);
+					threadMina.start();
+				}else {
+					View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+				}
 			}else {
-				View.exibirMensagemErro("Erro", "Aldeão Ocupado");
+				View.exibirMensagemErro("Erro", "O limite de Aldeões na Mina é de: "+evolucoesPrefeitura.getFazenda()*5);
 			}
 		}
 	}
@@ -245,11 +265,11 @@ public class Comandos {
 	public static void comandoPrefeituraCriarAldeao() {
 		int valor = Integer.parseInt(Principal.lblComida.getText());
 		Aldeao aldeao;
-		if(Comandos.evolucaoPrefeitura == "Evolução de aldeão") {
+		if(Principal.tmAldeoes.getValueAt(1,1)=="Evolução de aldeão") {
 			View.exibirMensagemErro("ERROR", "Aldeões se encontram em evolução, indiponivel para criação");
 		}else {
 	
-			if(valor>=100) { // Criação do aldeão
+			if(valor>=100) { 
 				aldeao = new Aldeao();
 				Thread threadAldeao = new Thread(aldeao);
 				threadAldeao.start();

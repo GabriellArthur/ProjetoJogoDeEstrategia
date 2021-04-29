@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 
+import config.Tempo;
 import uteis.View;
 
 //Evolução = Dobra a produção, e reduz o tempo de transporte da produção, tempo de evolução 100horas;
@@ -34,7 +35,7 @@ public class Aldeao implements Runnable{
 		int valor = Principal.tmAldeoes.getRowCount()+1;
 		Mostrar.adicionarAldeao(""+valor, "Tempo de criação[10s]");
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(Tempo.tempoDeCriacaoDoAldao);
 			Mostrar.mostrarAldeao(valor, "Pronto");
 			Mostrar.mostrarPrefeitura("Aldeao ["+valor+"] Criado", Color.GREEN);
 		} catch (InterruptedException e) {

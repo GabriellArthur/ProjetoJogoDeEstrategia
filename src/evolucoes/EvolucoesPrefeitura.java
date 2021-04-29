@@ -2,6 +2,7 @@ package evolucoes;
 
 import java.awt.Color;
 
+import config.Tempo;
 import main.Comandos;
 import main.Mostrar;
 import main.Principal;
@@ -54,7 +55,7 @@ public class EvolucoesPrefeitura implements Runnable{
 					int porcentagem = 0;
 					while(porcentagem!=100) {
 						try {
-							Thread.sleep(100);
+							Thread.sleep(Tempo.evoluirAldeao);
 							porcentagem++;
 							Mostrar.mostrarPrefeitura(porcentagem);
 						} catch (InterruptedException e) {
@@ -109,7 +110,7 @@ public class EvolucoesPrefeitura implements Runnable{
 					int porcentagem = 0;
 					while(porcentagem!=100) {
 						try {
-							Thread.sleep(100);
+							Thread.sleep(Tempo.evoluirFazenda);
 							porcentagem++;
 							Mostrar.mostrarPrefeitura(porcentagem);
 						} catch (InterruptedException e) {
@@ -164,7 +165,7 @@ public class EvolucoesPrefeitura implements Runnable{
 					int porcentagem = 0;
 					while(porcentagem!=100) {
 						try {
-							Thread.sleep(100);
+							Thread.sleep(Tempo.evoluirMina);
 							porcentagem++;
 							Mostrar.mostrarPrefeitura(porcentagem);
 						} catch (InterruptedException e) {

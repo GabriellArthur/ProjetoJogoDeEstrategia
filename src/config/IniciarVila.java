@@ -1,27 +1,21 @@
-package main;
+package config;
 
 import java.awt.Color;
+
+import main.Mostrar;
 //O jogo inicia com uma vila criada contendo
 public class IniciarVila {
 	public static void iniciarVila() {
 		for (int i = 1; i <= 5; i++) {
-			Mostrar.adicionarAldeao(""+i, "Pronto");
+			Mostrar.adicionarAldeao(""+i, "Pronto"); //5 aldeões
 		}
-		
-		Mostrar.adicionarFazenda("1", "Disponivel");
-		
-		Mostrar.adicionarMinaOuro("1", "Disponivel");
-		
-		Mostrar.mostrarComida(15000);
-		Mostrar.mostrarOuro(50000);
-		
-		
+		Mostrar.adicionarFazenda("1", "Disponivel"); //1 Fazenda
+		Mostrar.adicionarMinaOuro("1", "Disponivel");//1 Mina
+		Mostrar.mostrarComida(150);//150 Comida
+		Mostrar.mostrarOuro(500);//500 Ouro
 		Mostrar.mostrarPrefeitura("Prefeitura", Color.ORANGE);
-		
-		Mostrar.desabilitarhabilitarTemplo();
-		
-		Mostrar.habilitarMaravilha();
-		Mostrar.mostrarMaravilha(0);
+		Mostrar.desabilitarhabilitarTemplo();//Habilitado assim que é construido e inicia com 0 de fé
+		Mostrar.habilitarMaravilha();// 0 maravilha
 		
 		//Segunda parte
 		/*

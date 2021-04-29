@@ -1,5 +1,6 @@
 package main;
 
+import config.Tempo;
 import uteis.View;
 
 /*
@@ -29,7 +30,7 @@ public class Maravilha implements Runnable{
 								int ouro = Integer.parseInt(Principal.lblOuro.getText());
 								Mostrar.mostrarComida(comida-1);
 								Mostrar.mostrarOuro(ouro-1);
-								Thread.sleep(3000);
+								Thread.sleep(Tempo.tempoDeContrucaoDeTijolosNaMaravilha);
 								Principal.tijolos ++;
 								Mostrar.mostrarMaravilha(Principal.tijolos);
 							} catch (InterruptedException e) {
