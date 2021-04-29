@@ -54,10 +54,10 @@ public class EvolucoesTemplo implements Runnable{
 		if(Comandos.evolucoesTemplo.getGarfanhoto()<10) {
 			if(fe>=1000) {
 				fe = fe - 1000;
-				Mostrar.desabilitarOpcaoEvoluir();
+				Mostrar.desabilitarOpcaoEvoluir();//Desabilita o "evoluir"
 				//------------------------//
 				int porcentagem = 0;
-				while(porcentagem!=100) {
+				while(porcentagem!=100) {//Bar
 					try {
 						Thread.sleep(Tempo.evoluirGarfanhoto);
 						porcentagem++;
@@ -68,10 +68,10 @@ public class EvolucoesTemplo implements Runnable{
 				}
 				//------------------------//
 				Mostrar.mostrarOferendaFe(fe);
-				Comandos.evolucoesTemplo.evolucaoGarfanhoto();
+				Comandos.evolucoesTemplo.evolucaoGarfanhoto();//Evolui
 				Mostrar.habilitarOpcaoEvoluir();
 				Comandos.evolucaoTemplo = "";
-				Principal.lvlGarfanhoto.setValue(getGarfanhoto());
+				Principal.lvlGarfanhoto.setValue(getGarfanhoto());//Passa o level
 			}else if(Comandos.evolucoesTemplo.getPrimogenitos()==0){
 				View.exibirMensagemErro("Erro", "Não possui fé para [Nuvem de gafanhotos]");
 			}else {

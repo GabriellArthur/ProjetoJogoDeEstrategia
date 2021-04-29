@@ -13,29 +13,22 @@ import config.Tempo;
 
 
 public class Fazenda implements Runnable {
-	int tempoConstrução;
-	int Capacidade;
-	int tempoFazendeiro;
-	int tempoEvolucao;
-	
+
 	Fazenda(){
-		this.tempoConstrução=30;
-		this.Capacidade = 5;
-		this.tempoFazendeiro=3; //3h
 	}
 	
 	public synchronized void criarFazenda() {
 		Comandos.SwitchCriarFazenda = false;
-		int fazenda = Principal.tmFazendas.getRowCount()+1;
-		int aldeao = Comandos.comandoAldeaoConstruirFazenda+1;
+		int fazenda = Principal.tmFazendas.getRowCount()+1;//Pega a prox posição na lista de fazenda
+		int aldeao = Comandos.comandoAldeaoConstruirFazenda+1; //Pega o aldeao 
 		Mostrar.mostrarAldeao(aldeao, "Construindo Fazenda ["+fazenda+"]");
 		Mostrar.adicionarFazenda(""+fazenda, "Tempo de criação[30s]");
 		try {
-			Thread.sleep(Tempo.tempoDeCriacaoDaFazenda);//30000
+			Thread.sleep(Tempo.tempoDeCriacaoDaFazenda);
 			Mostrar.mostrarFazenda(fazenda, "Disponivel");
 			Mostrar.mostrarAldeao(aldeao, "Pronto");
 			
-			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirFazenda));
+			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirFazenda));//Remove da lista de trabalhadores, por que ele temrinou
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +41,7 @@ public class Fazenda implements Runnable {
 			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoCultivarFazenda)) {
 				int tamanho = 0;
 				for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
-					if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {
+					if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {//Pega todos que estão cultivando
 						tamanho++;
 					}
 				}

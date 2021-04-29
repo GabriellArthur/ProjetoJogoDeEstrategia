@@ -21,7 +21,7 @@ public class Maravilha implements Runnable{
 	public void run() {
 		boolean continuar = true;
 		while(continuar) {
-			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoConstruirMaravilha)) {
+			if(Comandos.Aldeoes.contains(Comandos.comandoAldeaoConstruirMaravilha)) { //Fica construindo sempre que tiver comida e ouro, caso n tenha ele n reclamará
 				if(Integer.parseInt(Principal.lblComida.getText())>=1) {
 					if(Integer.parseInt(Principal.lblOuro.getText())>=1) {
 						if(Principal.tijolos != custo) {

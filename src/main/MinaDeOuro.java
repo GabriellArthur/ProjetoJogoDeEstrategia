@@ -11,15 +11,8 @@ import config.Tempo;
  * Produção por fazendeiro: 5 unidade a cada 3h + 3h para transporte até a prefeitura
  */
 public class MinaDeOuro implements Runnable{
-	int tempoConstrução;
-	int capacidade;
-	int tempoFazendeiro;
-	int tempoEvolucao;
 	
 	MinaDeOuro(){
-		this.tempoConstrução=40;
-		this.capacidade=5;
-		this.tempoFazendeiro=3;
 	}
 	
 	public synchronized void criarMina() {

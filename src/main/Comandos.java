@@ -7,17 +7,17 @@ import evolucoes.EvolucoesTemplo;
 import uteis.View;
 
 public class Comandos {
-	public static ArrayList<Integer> Aldeoes = new ArrayList<Integer>();
-	public static boolean isTemplo = false;
-	public static EvolucoesTemplo evolucoesTemplo = new EvolucoesTemplo();
-	public static EvolucoesPrefeitura evolucoesPrefeitura = new EvolucoesPrefeitura();
+	public static ArrayList<Integer> Aldeoes = new ArrayList<Integer>(); //Array de Aldeões trabalhando
+	public static boolean isTemplo = false;//Se tem ou não tem Templo
+	public static EvolucoesTemplo evolucoesTemplo = new EvolucoesTemplo();//Evolução de Templo
+	public static EvolucoesPrefeitura evolucoesPrefeitura = new EvolucoesPrefeitura();//Evolução de Prefeitura
 	
 	public static void comandoAldeaoParar(int aldeao) {
 		if (aldeao == -1)
 			View.exibirMensagemErro("Erro", "Escolha um aldeão");
 		else {
 			if(Comandos.Aldeoes.contains(aldeao)) {
-				Aldeoes.remove(Comandos.Aldeoes.indexOf(aldeao));
+				Aldeoes.remove(Comandos.Aldeoes.indexOf(aldeao));//Remove do Array de Aldeões trabalhando
 				Mostrar.mostrarAldeao(aldeao+1, "Pronto");
 			}else {
 				View.exibirMensagemErro("Erro", "Aldeão Livre");
@@ -57,9 +57,9 @@ public class Comandos {
 		if(!Comandos.Aldeoes.contains(aldeao)) {
 			if(comida>=100) {
 				if(ouro>=500) {
-					SwitchCriarFazenda = true;
-					Aldeoes.add(aldeao);
-					comandoAldeaoConstruirFazenda = aldeao;
+					SwitchCriarFazenda = true;//Switch usado na classe, aonde ela possui mais de uma função para ser executada
+					Aldeoes.add(aldeao);//Add ao array de trabalhadores
+					comandoAldeaoConstruirFazenda = aldeao;//Passa como referencia o id do aldeao
 					//
 					fazenda = new Fazenda();
 					Thread threadFazenda = new Thread(fazenda);
@@ -137,7 +137,7 @@ public class Comandos {
 	}
 	
 	public static int comandoAldeaoConstruirMaravilha;
-	public static void comandoAldeaoConstruirMaravilha(int aldeao) {
+	public static void comandoAldeaoConstruirMaravilha(int aldeao) {//Fica rodando independete do seu ouro e comida, mas só soma quando tiver ouro e comida
 		Aldeoes.add(aldeao);
 		comandoAldeaoConstruirMaravilha = aldeao;
 		Mostrar.mostrarAldeao(aldeao+1, "Construindo Maravilha");
@@ -159,11 +159,11 @@ public class Comandos {
 				if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {
 					cultivadores++;
 				}
-			}
-			if(cultivadores < (evolucoesPrefeitura.getFazenda()*5)) {
+			}//Pega todos que estão cultivando no momento
+			if(cultivadores < (Principal.tmFazendas.getRowCount()*(evolucoesPrefeitura.getFazenda()*5))) {//Limite inical de fazendeiros é de 5 por fazenda, caso queira mais tenha que evoluir os aldeões
 				if(!Comandos.Aldeoes.contains(aldeao)) {
 					SwitchCultivar = true;
-					numeroDaFazendo = numeroFazenda;
+					numeroDaFazendo = numeroFazenda;	
 					Aldeoes.add(aldeao);
 					comandoAldeaoCultivarFazenda = aldeao;
 					Mostrar.mostrarAldeao(aldeao+1, "Cultivando");
@@ -176,7 +176,7 @@ public class Comandos {
 					View.exibirMensagemErro("Erro", "Aldeão Ocupado");
 				}
 			}else {
-				View.exibirMensagemErro("Erro", "O limite de Aldeões na fazenda é de: "+evolucoesPrefeitura.getFazenda()*5);
+				View.exibirMensagemErro("Erro", "O limite de Aldeões na fazenda é de: "+evolucoesPrefeitura.getFazenda()*5+" Por fazenda");
 			}
 		}
 			
@@ -195,7 +195,7 @@ public class Comandos {
 					cultivadores++;
 				}
 			}
-			if(cultivadores < (evolucoesPrefeitura.getMina()*5)) {
+			if(cultivadores < (Principal.tmMinasOuro.getRowCount()*(evolucoesPrefeitura.getMina()*5))) {
 				if(!Comandos.Aldeoes.contains(aldeao)) {
 					SwitchMinerar = true;
 					numeroDaMina = numeroMinaOuro;
@@ -211,7 +211,7 @@ public class Comandos {
 					View.exibirMensagemErro("Erro", "Aldeão Ocupado");
 				}
 			}else {
-				View.exibirMensagemErro("Erro", "O limite de Aldeões na Mina é de: "+evolucoesPrefeitura.getFazenda()*5);
+				View.exibirMensagemErro("Erro", "O limite de Aldeões na Mina é de: "+evolucoesPrefeitura.getFazenda()*5+" Por mina");
 			}
 		}
 	}

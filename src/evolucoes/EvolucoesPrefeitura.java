@@ -21,7 +21,7 @@ public class EvolucoesPrefeitura implements Runnable{
 	}
 	
 	@Override
-	public void run() {
+	public void run() { //Uma evolução por vez
 		switch (Comandos.evolucaoPrefeitura) {
 			case "Evolução de aldeão":
 				this.evoluirAldeaos();
@@ -35,23 +35,23 @@ public class EvolucoesPrefeitura implements Runnable{
 		}
 	}
 	
-	public void evoluirAldeaos() {
-		int comida = Integer.parseInt(Principal.lblComida.getText());
+	public void evoluirAldeaos() { //Evolução de aldeão
+		int comida = Integer.parseInt(Principal.lblComida.getText());//Pega as informações atuais de comida e ouro
 		int ouro = Integer.parseInt(Principal.lblOuro.getText());
-		if(Comandos.evolucoesPrefeitura.getAldeao()<10) {
+		if(Comandos.evolucoesPrefeitura.getAldeao()<10) {//Verifica se o upgrade já não está no maximo
 			if(comida>=5000) {
 				if(ouro>=5000) {
-					//------------------------//
+					//------------------------//Custo
 					comida = comida - 5000;
 					ouro = ouro - 5000;
-					//------------------------//
+					//------------------------//Mostra todos evoluindo e dar clear na lista de aldeos trabalhando
 					for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
 						Mostrar.mostrarAldeao(i, "Evoluindo");
 					}
 					Comandos.Aldeoes.clear();
-					//------------------------//
+					//------------------------//Desabilita opções, aldeões está evoluindo e indiponivel 
 					Mostrar.desabilitarOpcoesEvolucao("Todos");
-					//------------------------//
+					//------------------------//Carregamento da barra
 					int porcentagem = 0;
 					while(porcentagem!=100) {
 						try {
@@ -62,16 +62,16 @@ public class EvolucoesPrefeitura implements Runnable{
 							e.printStackTrace();
 						}
 					}
-					//------------------------//
+					//------------------------//Motra a acomida e ouro, evolui o aldeão e mostra na prefeitura que foi evoluido
 					Mostrar.mostrarComida(comida);
 					Mostrar.mostrarOuro(ouro);
 					Comandos.evolucoesPrefeitura.evoluirAldeao();
 					Mostrar.mostrarPrefeitura("Aldeões Evoluidos", Color.RED);
-					//------------------------//
+					//------------------------//Percorre toda a lista mudando o status para "pronto"
 					for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
 						Mostrar.mostrarAldeao(i, "Pronto");
 					}
-					//------------------------//
+					//------------------------//reset's e aumanta o valor de level do aldeão
 					Comandos.evolucaoPrefeitura = "";
 					Mostrar.habilitarOpcoesEvolucao("Todos");
 					Principal.lvlAldeao.setValue(getAldeao());
@@ -94,9 +94,9 @@ public class EvolucoesPrefeitura implements Runnable{
 				if(ouro>=5000) {
 					comida = comida - 500;
 					ouro = ouro - 5000;
-					//------------------------// Remover aldeaos colhendo
+					//------------------------//
 					for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
-						if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") {
+						if(Principal.tmAldeoes.getValueAt(i-1,1)=="Cultivando") { //Pega todos os aldeões que estão cultivando e para ele, já que a fazenda vai está evoluindo
 							Mostrar.mostrarAldeao(i, "Pronto");
 							Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(i-1));
 						}
@@ -149,9 +149,9 @@ public class EvolucoesPrefeitura implements Runnable{
 				if(ouro>=1000) {
 					comida = comida - 2000;
 					ouro = ouro - 1000;
-					//------------------------// Remover aldeaos minerando
+					//------------------------//
 					for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
-						if(Principal.tmAldeoes.getValueAt(i-1,1)=="Minerando") {
+						if(Principal.tmAldeoes.getValueAt(i-1,1)=="Minerando") {//Pega todos os aldeões que estão Minerando e para ele, já que a Mina vai está evoluindo
 							Mostrar.mostrarAldeao(i, "Pronto");
 							Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(i-1));
 						}

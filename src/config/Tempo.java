@@ -25,3 +25,4 @@ public class Tempo {
 	public static int evoluirProtecaoPrimogenitos=600000; //600horas
 	public static int evoluirProtecaoPedra=700000;//700horas
 }
+//Diminua o tempo para testes
