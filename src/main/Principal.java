@@ -6,6 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +21,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -31,11 +36,33 @@ import config.IniciarVila;
 import uteis.View;
 
 import java.awt.Toolkit;
+import javax.swing.JTextPane;
+import javax.swing.UIManager;
+import java.awt.TextField;
+import javax.swing.JRadioButton;
 
 public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
-	//Jogador
-	static JLabel lblJogador;
+	public static ArrayList<BufferedWriter>clientes;
+	public static ServerSocket server;
+	public static JTextPane pnPorta;
+	public static JComboBox<String> pnCivilizacoes;
+	public static JTextPane pnNomeUsuario;
+	static String status;
+	public static JTextArea texto;
+	public static JTextArea textoVila;
+	public static JTextField txtMsg;
+	public static JTextField lbl_Ip;
+	public static JButton btnIniciarJogo;
+	public static JButton btnCriarJogo;
+	public static JButton btnEncerrarJogo;
+	public static JRadioButton rdbtnCriarJogo;
+	public static JRadioButton rdbtnConectarJogo;
+	public static JButton btnConectar;
+	public static JButton btnDesconectar;
+	//Jogos
+	static JTable tblJogos;
+	public static DefaultTableModel tmJogos;
 	//Aldeao
 	static JTable tblAldeoes;
 	public static DefaultTableModel tmAldeoes;
@@ -107,6 +134,7 @@ public class Principal extends JFrame {
 	static JPanel pnMaravilha;
 	static JLabel lblMaravilha;
 	static JProgressBar pbMaravilha;
+	private static JTextField lbl_portaConectar;
 	
 
 	public static void main(String[] args) {
@@ -119,15 +147,7 @@ public class Principal extends JFrame {
 	public Principal() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/img/icone.png")));
         initialize();
-        IniciarVila.iniciarVila();
-		try {
-			String nome = View.inserirNome();
-			String civilizacao = View.civilizacao();
-	        Principal.lblJogador.setText(nome +" - "+ civilizacao);
-		} catch (Exception e) {
-			View.exibirMensagem(e.getMessage());
-		}
-		
+        Mostrar.desabilitarOpcoesEvolucao("Todos");
 
 	}
 
@@ -136,7 +156,7 @@ public class Principal extends JFrame {
 		this.setTitle("Jogo de Estratégia em Tempo Real");
 		this.setResizable(false);
 		this.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		this.setBounds(50, 50, 886, 720);
+		this.setBounds(50, 50, 886, 862);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 
@@ -195,26 +215,188 @@ public class Principal extends JFrame {
 				super.setValue(valor);
 			}
 		};
+		
+		DefaultTableCellRenderer dtcrSitaucaoJogo = new DefaultTableCellRenderer() {
+			public void setValue(Object valor) {
+				String v=valor.toString();
+				switch (v) {							
+					case "Online":
+						setBackground(Color.GREEN);
+						break;
+					case "Colhendo":
+						setBackground(Color.green);
+						break;
+					case "Minerando":
+						setBackground(Color.YELLOW);
+						break;
+					default:
+						setBackground(Color.LIGHT_GRAY); 
+						break;
+				}
+				super.setValue(valor);
+			}
+		};
 
 		//*** Componentes ****************************************************
-
+		//TELA TE INICIO
 		JTabbedPane tpJogo = new JTabbedPane(JTabbedPane.TOP);
-		tpJogo.setBounds(10, 10, 850, 665);
+		tpJogo.setBounds(10, 10, 850, 793);
 		this.getContentPane().add(tpJogo);
 
 		JPanel pnTP_Inicio = new JPanel();
 		pnTP_Inicio.setLayout(null);
 		tpJogo.addTab("Início", null, pnTP_Inicio, null);
 
-		JPanel pnJogador = new JPanel();
-		pnJogador.setBorder(new TitledBorder(null, "Jogador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnJogador.setBounds(10, 10, 250, 51);
-		pnTP_Inicio.add(pnJogador);
-
-		lblJogador = new JLabel("Jogador");
-		lblJogador.setFont(new Font("Tahoma", Font.BOLD, 12));
-		pnJogador.add(lblJogador);
-
+		JPanel pnNome = new JPanel();
+		pnNome.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Nome", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnNome.setBounds(10, 10, 250, 51);
+		pnTP_Inicio.add(pnNome);
+		pnNome.setLayout(null);
+		
+		Principal.pnNomeUsuario = new JTextPane();
+		pnNomeUsuario.setBounds(10, 21, 230, 20);
+		pnNome.add(pnNomeUsuario);
+		
+		JPanel pnCivilizacao = new JPanel();
+		pnCivilizacao.setBorder(new TitledBorder(null, "Civiliza\u00E7\u00E3o", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnCivilizacao.setBounds(270, 10, 250, 51);
+		pnTP_Inicio.add(pnCivilizacao);
+		pnCivilizacao.setLayout(null);
+		
+		Principal.pnCivilizacoes = new JComboBox<String>();
+		pnCivilizacoes.setBounds(10, 21, 230, 22);
+		pnCivilizacoes.addItem("Acádia");
+		pnCivilizacoes.addItem("Babilônia");
+		pnCivilizacoes.addItem("Helenística");
+		pnCivilizacoes.addItem("Mesopotâmica");
+		pnCivilizacoes.addItem("Persa");
+		pnCivilizacoes.addItem("Suméria");
+		pnCivilizacao.add(pnCivilizacoes);
+		
+		JPanel pnCriarJogo = new JPanel();
+		pnCriarJogo.setBorder(new TitledBorder(UIManager.getBorder("CheckBoxMenuItem.border"), "Criar Jogo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnCriarJogo.setToolTipText("");
+		pnCriarJogo.setBounds(10, 72, 825, 274);
+		pnTP_Inicio.add(pnCriarJogo);
+		
+		Principal.rdbtnCriarJogo = new JRadioButton("Criar Jogo");
+		rdbtnCriarJogo.setSelected(false);
+		rdbtnCriarJogo.setBounds(0, 0, 109, 23);
+		pnCriarJogo.add(rdbtnCriarJogo);
+		
+		String[]colunasJogos = {"Jogador","Civilização","IP","Situação"};
+		Principal.tmJogos = (
+			new DefaultTableModel(null,colunasJogos) {
+				public boolean isCellEditable(int row,int column) {
+					return false;
+				}
+			}
+		);
+		
+		Principal.tblJogos = new JTable(Principal.tmJogos);
+		Principal.tblJogos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		Principal.tblJogos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		Principal.tblJogos.getColumn("Situação").setCellRenderer(dtcrSitaucaoJogo);
+		Principal.tblJogos.getColumnModel().getColumn(0).setResizable(false);
+		Principal.tblJogos.getColumnModel().getColumn(0).setCellRenderer(dtcrCentralizado);
+		Principal.tblJogos.getColumnModel().getColumn(0).setPreferredWidth(50);
+		Principal.tblJogos.getColumnModel().getColumn(1).setResizable(false);
+		Principal.tblJogos.getColumnModel().getColumn(1).setPreferredWidth(202);
+		
+		JScrollPane spJogos = new JScrollPane(Principal.tblJogos);
+		spJogos.setBounds(10, 31, 805, 198);
+		spJogos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		pnCriarJogo.add(spJogos);
+		
+		Principal.btnIniciarJogo = new JButton("Iniciar Jogo");
+		btnIniciarJogo.setBounds(191, 240, 170, 23);
+		
+		Principal.btnCriarJogo = new JButton("Criar novo jogo");
+		btnCriarJogo.setBounds(10, 240, 170, 23);
+		
+		Principal.btnEncerrarJogo = new JButton("Encerrar Jogo");
+		btnEncerrarJogo.setBounds(371, 240, 170, 23);
+		pnCriarJogo.setLayout(null);
+		
+		pnCriarJogo.add(btnIniciarJogo);
+		pnCriarJogo.add(btnCriarJogo);
+		pnCriarJogo.add(btnEncerrarJogo);
+		//Conectar a um Jogo
+		JPanel pnConectarJogo = new JPanel();
+		pnConectarJogo.setBorder(new TitledBorder(UIManager.getBorder("CheckBoxMenuItem.border"), "Conectar a um Jogo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnConectarJogo.setBounds(10, 357, 825, 72);
+		pnTP_Inicio.add(pnConectarJogo);
+		pnConectarJogo.setLayout(null);
+		
+		Principal.rdbtnConectarJogo = new JRadioButton("Conectar a um Jogo");
+		rdbtnConectarJogo.setBounds(0, 0, 143, 23);
+		pnConectarJogo.add(rdbtnConectarJogo);
+		
+		JPanel pnDigitarIp = new JPanel();
+		pnDigitarIp.setBorder(new TitledBorder(null, "IP do computador que criou o jogo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnDigitarIp.setBounds(0, 24, 389, 44);
+		pnConectarJogo.add(pnDigitarIp);
+		pnDigitarIp.setLayout(null);
+		
+		lbl_Ip = new JTextField("127.0.0.1"); //Ip
+		lbl_Ip.setBounds(2, 21, 384, 25);
+		pnDigitarIp.add(lbl_Ip);
+		lbl_Ip.setColumns(10);
+		
+		Principal.btnConectar = new JButton("Conectar");
+		btnConectar.setBounds(575, 42, 115, 23);
+		pnConectarJogo.add(btnConectar);
+		
+		Principal.btnDesconectar = new JButton("Desconectar");
+		btnDesconectar.setBounds(700, 42, 115, 23);
+		pnConectarJogo.add(btnDesconectar);
+		
+		JPanel pnPortaConectar = new JPanel();
+		pnPortaConectar.setBorder(new TitledBorder(null, "Porta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnPortaConectar.setBounds(391, 24, 174, 44);
+		pnConectarJogo.add(pnPortaConectar);
+		pnPortaConectar.setLayout(null);
+		
+		lbl_portaConectar = new JTextField();
+		lbl_portaConectar.setBounds(2, 21, 170, 20);
+		pnPortaConectar.add(lbl_portaConectar);
+		lbl_portaConectar.setColumns(10);
+		//MENSAGENS
+		JPanel pnChatInicio = new JPanel();
+		pnChatInicio.setBorder(new TitledBorder(null, "Mensagens", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnChatInicio.setBounds(10, 440, 825, 314);
+		pnTP_Inicio.add(pnChatInicio);
+		pnChatInicio.setLayout(null);
+		
+		texto = new JTextArea(10,20);
+		texto.setEditable(false);
+		texto.setBackground(new Color(240,240,240));
+		
+		JScrollPane scroll = new JScrollPane(texto);
+		texto.setLineWrap(true);
+		scroll.setBounds(10, 22, 805, 247);
+		
+		JButton btnSend = new JButton("Enviar");
+		btnSend.setToolTipText("Enviar Mensagem");
+		btnSend.setBounds(736, 280, 79, 23);
+		
+		txtMsg = new JTextField(20);
+		txtMsg.setBounds(10, 280, 716, 23);
+		
+		pnChatInicio.add(scroll);
+		pnChatInicio.add(btnSend);
+		pnChatInicio.add(txtMsg);
+		//--------------------------------------------//
+		JPanel pnConexaoPorta = new JPanel();
+		pnConexaoPorta.setBorder(new TitledBorder(null, "Porta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnConexaoPorta.setBounds(530, 11, 198, 50);
+		pnTP_Inicio.add(pnConexaoPorta);
+		pnConexaoPorta.setLayout(null);
+		
+		Principal.pnPorta = new JTextPane();
+		pnPorta.setBounds(10, 21, 178, 20);
+		pnConexaoPorta.add(pnPorta);
+		//VILA
 		JPanel pnTP_Vila = new JPanel();
 		pnTP_Vila.setLayout(null);
 		tpJogo.addTab("Vila", null, pnTP_Vila, null);
@@ -582,6 +764,50 @@ public class Principal extends JFrame {
 		Principal.pnMaravilha.setBounds(570, 430, 270, 200);
 		Principal.pnMaravilha.setEnabled(false);
 		pnTP_Vila.add(Principal.pnMaravilha);
+		
+		JPanel pnChatVila = new JPanel();
+		pnChatVila.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Mensagens", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnChatVila.setBounds(10, 632, 825, 122);
+		pnTP_Vila.add(pnChatVila);
+		pnChatVila.setLayout(null);
+		
+		
+		JPanel pnDigitado = new JPanel();
+		pnDigitado.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnDigitado.setBounds(10, 88, 734, 23);
+		pnChatVila.add(pnDigitado);
+		pnDigitado.setLayout(null);
+		
+		TextField pnDigitar = new TextField();
+		pnDigitar.setBounds(0, 0, 734, 29);
+		pnDigitado.add(pnDigitar);
+		
+		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals(btnSend.getActionCommand())) {
+					try {
+						Comandos.app.enviarMensagem(pnDigitar.getText());
+					} catch (Exception e2) {
+						View.exibirMensagemErro("ERROR", e2.getMessage());
+					}
+					pnDigitar.setText("");
+				}
+			}
+		});
+		btnEnviar.setBounds(745, 88, 70, 23);
+		pnChatVila.add(btnEnviar);
+		
+		textoVila = new JTextArea(2,20);
+		textoVila.setLineWrap(true);
+		textoVila.setEditable(false);
+		textoVila.setBackground(new Color(240,240,240));
+		
+		
+		JScrollPane scrollVila = new JScrollPane(textoVila);
+		texto.setLineWrap(true);
+		scrollVila.setBounds(10, 22, 805, 55);
+		pnChatVila.add(scrollVila);
 
 		Principal.lblMaravilha = new JLabel();
 		Principal.lblMaravilha.setBounds(10, 20, 215, 170);
@@ -597,9 +823,69 @@ public class Principal extends JFrame {
 		Principal.pbMaravilha.setEnabled(false);
 		Principal.pnMaravilha.add(pbMaravilha);
 
-		tpJogo.setSelectedIndex(1);
+		tpJogo.setSelectedIndex(0);
 
 		//*** Eventos ********************************************************
+		
+		btnSend.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals(btnSend.getActionCommand())) {
+					try {
+						Comandos.app.enviarMensagem(Principal.txtMsg.getText());
+					} catch (Exception e2) {
+						View.exibirMensagemErro("ERROR", e2.getMessage());
+					}
+				}
+			}
+		});
+		
+		
+		btnIniciarJogo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				IniciarVila.iniciarVila();
+				tpJogo.setSelectedIndex(1);
+			}
+		});
+		
+		btnCriarJogo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Comandos.comandoCriarJogo();
+			}
+		});
+		
+		btnEncerrarJogo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Encerrar Jogo");
+			}
+		});
+		
+		rdbtnCriarJogo.addActionListener(new ActionListener(){ ///////Botão de criar jogo
+			public void actionPerformed(ActionEvent e) {
+				Mostrar.mostrarCriarJogo();
+			}
+		});
+		
+		rdbtnConectarJogo.addActionListener(new ActionListener(){ ///////Botão de conectar jogo
+			public void actionPerformed(ActionEvent e) {
+				Mostrar.mostrarConectarJogo();
+			}
+		});
+		
+		btnConectar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Comandos.conectarJogo(Principal.lbl_Ip.getText(),Principal.lbl_portaConectar.getText());
+			}
+		});
+		
+		btnDesconectar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Comandos.app.sair();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		btnAldeaoParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -662,6 +948,4 @@ public class Principal extends JFrame {
 		});
 
 	}
-
-	
 }

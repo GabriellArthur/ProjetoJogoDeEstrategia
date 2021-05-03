@@ -1,7 +1,6 @@
 package main;
 
 import config.Tempo;
-import uteis.View;
 
 /*
 Custo: 100.000 tijolos (pago tijolo a tijolo). Cada tijolo custa comida=1 + ouro=1
@@ -38,7 +37,6 @@ public class Maravilha implements Runnable{
 							}
 						}else {
 							Mostrar.mostrarAldeao(Comandos.comandoAldeaoConstruirMaravilha+1, "Pronto");
-							View.exibirMensagem(Principal.lblJogador.getName()+" Venceu");
 							continuar = false;
 						}
 					}

@@ -4,24 +4,59 @@ import java.awt.Color;
 import java.util.List;
 
 public class Mostrar {
-
-
+	//Adicionar
+	public static void adicionarSave(String name,String civilizacao,String ip,String status) {
+		String[] linha = {name, civilizacao,ip,status};
+		Principal.tmJogos.addRow(linha);
+	}
+	
 	public static void adicionarAldeao(String numero, String acao) {
 		String[] linha = {numero, acao};
 		Principal.tmAldeoes.addRow(linha);
 	}
 
-	public static void mostrarAldeao(int aldeao, String acao) {
-		Principal.tblAldeoes.setValueAt(acao, aldeao-1, 1);
-		
-	}
 
 	public static void adicionarFazenda(String numero, String aldeoes) {
 		String[] linha = {numero, aldeoes};
 		Principal.tmFazendas.addRow(linha);
 		Principal.cbFazenda.addItem(numero);
 	}
-
+	
+	public static void adicionarMinaOuro(String numero, String aldeoes) {
+		String[] linha = {numero, aldeoes};
+		Principal.tmMinasOuro.addRow(linha);
+		Principal.cbMinaOuro.addItem(numero);
+	}
+	//Mostrar
+	
+	public static void mostrarCriarJogo() {
+		Principal.pnPorta.setEnabled(true);
+		Principal.tblJogos.setEnabled(true);
+		Principal.btnIniciarJogo.setEnabled(true);
+		Principal.btnCriarJogo.setEnabled(true);
+		Principal.btnEncerrarJogo.setEnabled(true);
+		Principal.rdbtnConectarJogo.setSelected(false);
+		Principal.btnConectar.setEnabled(false);
+		Principal.btnDesconectar.setEnabled(false);
+		
+	}
+	
+	public static void mostrarConectarJogo() {
+		Principal.pnPorta.setEnabled(false);
+		Principal.tblJogos.setEnabled(false);
+		Principal.btnIniciarJogo.setEnabled(false);
+		Principal.btnCriarJogo.setEnabled(false);
+		Principal.btnEncerrarJogo.setEnabled(false);
+		Principal.rdbtnCriarJogo.setSelected(false);
+		Principal.btnConectar.setEnabled(true);
+		Principal.btnDesconectar.setEnabled(true);
+	}
+	
+	public static void mostrarAldeao(int aldeao, String acao) {
+		Principal.tblAldeoes.setValueAt(acao, aldeao-1, 1);
+		
+	}
+	
 	public static void mostrarFazenda(int fazenda, String aldeoes) {
 		Principal.tblFazendas.setValueAt(aldeoes, fazenda-1, 1);
 	}
@@ -30,11 +65,6 @@ public class Mostrar {
 		Principal.lblComida.setText(Integer.toString(qtd));
 	}
 
-	public static void adicionarMinaOuro(String numero, String aldeoes) {
-		String[] linha = {numero, aldeoes};
-		Principal.tmMinasOuro.addRow(linha);
-		Principal.cbMinaOuro.addItem(numero);
-	}
 
 	public static void mostrarMinaOuro(int minaOuro, String aldeoes) {
 		Principal.tblMinasOuro.setValueAt(aldeoes, minaOuro-1, 1);

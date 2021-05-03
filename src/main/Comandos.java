@@ -1,9 +1,12 @@
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import evolucoes.EvolucoesPrefeitura;
 import evolucoes.EvolucoesTemplo;
+import servidor.Cliente;
+import servidor.ExecutarServidor;
 import uteis.View;
 
 public class Comandos {
@@ -301,4 +304,40 @@ public class Comandos {
 		Thread threadEvoluir = new Thread (evolucoesPrefeitura);
 		threadEvoluir.start();
 	}
+	public static Cliente app;
+	public static void comandoCriarJogo() {
+		if(!Principal.pnNomeUsuario.getText().isEmpty()) {
+			if(!Principal.pnPorta.getText().isEmpty() && Principal.pnPorta.getText().length()<=5) {
+				String server = "127.0.0.1";
+				Mostrar.adicionarSave(Principal.pnNomeUsuario.getText(), Principal.pnCivilizacoes.getSelectedItem().toString(), server+":"+Principal.pnPorta.getText(), "Online");
+				
+				ExecutarServidor serv = new ExecutarServidor();
+				serv.start();
+				
+				try {
+					app = new Cliente(server,Principal.pnPorta.getText(),Principal.pnNomeUsuario.getText(),Principal.pnCivilizacoes.getSelectedItem().toString());
+					app.conectar();
+					app.start();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				
+			}else {
+				View.exibirMensagemErro("ERROR", "Informe a porta certa");
+			}
+		}else {
+			View.exibirMensagemErro("ERROR", "Informe o seu nome");
+		}
+	}
+	public static void conectarJogo(String server,String porta) {
+		try {
+			app = new Cliente(server,porta,Principal.pnNomeUsuario.getText(),Principal.pnCivilizacoes.getSelectedItem().toString());
+			app.conectar();
+			app.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
