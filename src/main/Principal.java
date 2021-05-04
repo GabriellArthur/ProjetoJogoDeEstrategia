@@ -32,7 +32,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import config.IniciarVila;
 import uteis.View;
 
 import java.awt.Toolkit;
@@ -60,6 +59,7 @@ public class Principal extends JFrame {
 	public static JRadioButton rdbtnConectarJogo;
 	public static JButton btnConectar;
 	public static JButton btnDesconectar;
+	public static JTabbedPane tpJogo;
 	//Jogos
 	static JTable tblJogos;
 	public static DefaultTableModel tmJogos;
@@ -223,10 +223,7 @@ public class Principal extends JFrame {
 					case "Online":
 						setBackground(Color.GREEN);
 						break;
-					case "Colhendo":
-						setBackground(Color.green);
-						break;
-					case "Minerando":
+					case "Jogando":
 						setBackground(Color.YELLOW);
 						break;
 					default:
@@ -239,7 +236,7 @@ public class Principal extends JFrame {
 
 		//*** Componentes ****************************************************
 		//TELA TE INICIO
-		JTabbedPane tpJogo = new JTabbedPane(JTabbedPane.TOP);
+		Principal.tpJogo = new JTabbedPane(JTabbedPane.TOP);
 		tpJogo.setBounds(10, 10, 850, 793);
 		this.getContentPane().add(tpJogo);
 
@@ -280,7 +277,7 @@ public class Principal extends JFrame {
 		pnTP_Inicio.add(pnCriarJogo);
 		
 		Principal.rdbtnCriarJogo = new JRadioButton("Criar Jogo");
-		rdbtnCriarJogo.setSelected(false);
+		rdbtnCriarJogo.setSelected(true);
 		rdbtnCriarJogo.setBounds(0, 0, 109, 23);
 		pnCriarJogo.add(rdbtnCriarJogo);
 		
@@ -823,7 +820,8 @@ public class Principal extends JFrame {
 		Principal.pbMaravilha.setEnabled(false);
 		Principal.pnMaravilha.add(pbMaravilha);
 
-		tpJogo.setSelectedIndex(0);
+		Principal.tpJogo.setSelectedIndex(0);
+		Mostrar.mostrarCriarJogo();
 
 		//*** Eventos ********************************************************
 		
@@ -839,11 +837,14 @@ public class Principal extends JFrame {
 			}
 		});
 		
-		
 		btnIniciarJogo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				IniciarVila.iniciarVila();
-				tpJogo.setSelectedIndex(1);
+				try {
+					Comandos.comandoIniciarVila();
+					Comandos.app.enviarMensagem("/Jogar");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		

@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import config.IniciarVila;
 import evolucoes.EvolucoesPrefeitura;
 import evolucoes.EvolucoesTemplo;
 import servidor.Cliente;
@@ -14,6 +15,14 @@ public class Comandos {
 	public static boolean isTemplo = false;//Se tem ou não tem Templo
 	public static EvolucoesTemplo evolucoesTemplo = new EvolucoesTemplo();//Evolução de Templo
 	public static EvolucoesPrefeitura evolucoesPrefeitura = new EvolucoesPrefeitura();//Evolução de Prefeitura
+	
+	public static void comandoIniciarVila() {
+		Principal.btnIniciarJogo.setEnabled(false);
+		Principal.btnCriarJogo.setEnabled(false);
+		IniciarVila.iniciarVila();
+		Principal.tpJogo.setSelectedIndex(1);
+	}
+	
 	
 	public static void comandoAldeaoParar(int aldeao) {
 		if (aldeao == -1)
@@ -321,8 +330,7 @@ public class Comandos {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
-				
+				Principal.btnCriarJogo.setEnabled(false);
 			}else {
 				View.exibirMensagemErro("ERROR", "Informe a porta certa");
 			}
@@ -335,6 +343,7 @@ public class Comandos {
 			app = new Cliente(server,porta,Principal.pnNomeUsuario.getText(),Principal.pnCivilizacoes.getSelectedItem().toString());
 			app.conectar();
 			app.start();
+			Principal.texto.append("Você se conectou...\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

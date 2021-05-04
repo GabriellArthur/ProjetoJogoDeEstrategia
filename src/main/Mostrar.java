@@ -32,8 +32,12 @@ public class Mostrar {
 	public static void mostrarCriarJogo() {
 		Principal.pnPorta.setEnabled(true);
 		Principal.tblJogos.setEnabled(true);
-		Principal.btnIniciarJogo.setEnabled(true);
-		Principal.btnCriarJogo.setEnabled(true);
+		Principal.btnIniciarJogo.setEnabled(true);	
+		if(Comandos.app == null) {
+			Principal.btnCriarJogo.setEnabled(true);
+		}else {
+			Principal.btnCriarJogo.setEnabled(false);
+		}
 		Principal.btnEncerrarJogo.setEnabled(true);
 		Principal.rdbtnConectarJogo.setSelected(false);
 		Principal.btnConectar.setEnabled(false);

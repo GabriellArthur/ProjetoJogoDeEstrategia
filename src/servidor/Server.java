@@ -11,6 +11,7 @@ import java.net.Socket;
 
 import main.Mostrar;
 import main.Principal;
+import uteis.View;
 
 public class Server extends Thread {
 	private String nome;
@@ -43,10 +44,13 @@ public class Server extends Thread {
 		if(Principal.tmJogos.getValueAt(0,0).equals(Principal.pnNomeUsuario.getText())) { //Add um novo usuario a lista
 			if(!Principal.tmJogos.getValueAt(Principal.tmJogos.getRowCount()-1,0).equals(msg.substring(0,msg.indexOf("[")))) {
 				Mostrar.adicionarSave(msg.substring(0,msg.indexOf("[")), msg.substring(msg.indexOf("[")+1, msg.indexOf("]")), "127.0.0.1:"+Principal.pnPorta.getText(), "Online");
+				Principal.texto.append(msg.substring(0,msg.indexOf("["))+" se conectou...\n");
 			}
 		}
 		
-	    while(!"Sair".equalsIgnoreCase(msg) && msg != null){
+		
+		
+		while(!"Sair".equalsIgnoreCase(msg) && msg != null){
 	       msg = bfr.readLine();
 	       sendToAll(bfw, msg);
 	    }

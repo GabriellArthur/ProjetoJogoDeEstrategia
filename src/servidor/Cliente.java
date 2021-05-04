@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
 
+import main.Comandos;
 import main.Principal;
 
 public class Cliente extends Thread{
@@ -67,6 +68,8 @@ public class Cliente extends Thread{
 					msg = bfr.readLine();
 					if(msg.equals("Sair")) {
 						Principal.texto.append("Servidor caiu! \r\n");
+					}else if(msg.endsWith("/Jogar")) {
+						Comandos.comandoIniciarVila();
 					}else {
 						Principal.texto.append(msg+"\r\n");
 						Principal.textoVila.append(msg+"\r\n");
