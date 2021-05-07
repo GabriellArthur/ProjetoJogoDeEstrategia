@@ -1,5 +1,7 @@
 package main;
 
+import java.io.IOException;
+
 import config.Tempo;
 
 /*
@@ -31,6 +33,13 @@ public class Maravilha implements Runnable{
 								Mostrar.mostrarOuro(ouro-1);
 								Thread.sleep(Tempo.tempoDeContrucaoDeTijolosNaMaravilha);
 								Principal.tijolos ++;
+								if(Principal.tijolos >= 10000){
+									try {
+										Comandos.app.enviarMensagem(Principal.pnNomeUsuario.getText()+" Ganhouuuuuuuuuuuu......");
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
 								Mostrar.mostrarMaravilha(Principal.tijolos);
 							} catch (InterruptedException e) {
 								e.printStackTrace();

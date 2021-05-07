@@ -88,7 +88,9 @@ public class Cliente extends Thread{
 				        	int nivel = Integer.parseInt(msg.substring(msg.length()-1,msg.length()));
 				        	Comandos.comandoReceberAttack(attack,nivel);
 				        }
-					}else  {
+					}else if(msg.indexOf("Ganhouuuuuuuuuuuu")>0){
+						Comandos.comandoEncerrarVila();
+					}else {
 						Principal.texto.append(msg+"\r\n");
 						Principal.textoVila.append(msg+"\r\n");
 					}

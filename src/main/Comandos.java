@@ -22,6 +22,13 @@ public class Comandos {
 		IniciarVila.iniciarVila();
 		Principal.tpJogo.setSelectedIndex(1);
 	}
+	public static void comandoEncerrarVila() {
+		Mostrar.desabilitarOpcoesEvolucao("Todos");
+		Principal.tpJogo.setSelectedIndex(0);
+		for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) { //Para todos os aldeoes
+			comandoAldeaoParar(i);
+		}
+	}
 	
 	
 	public static void comandoAldeaoParar(int aldeao) {

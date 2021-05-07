@@ -862,7 +862,11 @@ public class Principal extends JFrame {
 		
 		btnEncerrarJogo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					Comandos.app.sair();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
