@@ -146,6 +146,9 @@ public class Mostrar {
 		Principal.lblOferenda.setEnabled(false);
 		Principal.cbTEmploEvolucoes.setEnabled(false);
 		Principal.btnTemploEvoluir.setEnabled(false);	
+		Principal.cbTemploLancamentos.setEnabled(false);
+		Principal.cbTemploInimigo.setEnabled(false);
+		Principal.btnTemploLancar.setEnabled(false);
 	}
 	
 	public static void habilitarTemplo() {
@@ -154,6 +157,9 @@ public class Mostrar {
 		Principal.lblOferenda.setEnabled(true);
 		Principal.cbTEmploEvolucoes.setEnabled(true);
 		Principal.btnTemploEvoluir.setEnabled(true);
+		Principal.cbTemploLancamentos.setEnabled(true);
+		Principal.cbTemploInimigo.setEnabled(true);
+		Principal.btnTemploLancar.setEnabled(true);
 	}
 
 	public static void habilitarMaravilha() {
@@ -175,15 +181,17 @@ public class Mostrar {
 	}
 
 	public static void mostrarAtaques(List<String> evolucoes) {
-		Principal.cbTemploLancamentos.setEnabled(true);
-		Principal.cbTemploInimigo.setEnabled(true);
-		Principal.btnTemploLancar.setEnabled(true);
 		Principal.cbTemploLancamentos.removeAllItems();
 		for (String evolucao : evolucoes) {
 			switch (evolucao) {
-			case "NUVEM_GAFANHOTOS":	Principal.cbTemploLancamentos.addItem("Nuvem de gafanhotos");	break;
-			case "MORTE_PRIMOGENITOS":	Principal.cbTemploLancamentos.addItem("Morte dos primogênitos");	break;
-			case "CHUVA_PEDRAS": 		Principal.cbTemploLancamentos.addItem("Chuva de pedras");
+				case "NUVEM_GAFANHOTOS":	
+					Principal.cbTemploLancamentos.addItem("Nuvem de gafanhotos");	
+					break;
+				case "MORTE_PRIMOGENITOS":	
+					Principal.cbTemploLancamentos.addItem("Morte dos primogênitos");	
+					break;
+				case "CHUVA_PEDRAS": 		
+					Principal.cbTemploLancamentos.addItem("Chuva de pedras");
 			}
 		}
 	}

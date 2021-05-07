@@ -43,7 +43,7 @@ public class Templo implements Runnable{
 		try {
 			Comandos.isTemplo = true;
 			Thread.sleep(Tempo.tempoDeCriacaoDoTemplo);//10000
-			Mostrar.mostrarOferendaFe(0);
+			Mostrar.mostrarOferendaFe(150000);
 			Mostrar.habilitarTemplo();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -90,10 +90,6 @@ public class Templo implements Runnable{
 		int aldeao = Comandos.comandoAldeaoSacrificar+1;
 		Mostrar.mostrarAldeao(aldeao, "Sacrificado");
 		
-		for (Integer integer : Comandos.Aldeoes) {
-			if(integer == Comandos.comandoAldeaoConstruirTemplo) {
-				Comandos.Aldeoes.remove(integer);
-			}
-		}
+		Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(aldeao-1));
 	}
 }

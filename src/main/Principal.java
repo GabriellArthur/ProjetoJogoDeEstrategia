@@ -126,8 +126,8 @@ public class Principal extends JFrame {
 	static JTextField tfTemplo;
 	static JComboBox<String> cbTEmploEvolucoes;
 	static JButton btnTemploEvoluir;
-	static JComboBox<String> cbTemploLancamentos;
-	static JComboBox<String> cbTemploInimigo;
+	public static JComboBox<String> cbTemploLancamentos;
+	public static JComboBox<String> cbTemploInimigo;
 	static JButton btnTemploLancar;
 	//Maravilha
 	public static int tijolos;
@@ -181,6 +181,9 @@ public class Principal extends JFrame {
 					case "Sacrificado":
 						setBackground(Color.RED);
 						break;
+					case "Morto":
+						setBackground(Color.RED);
+						break;
 					case "Cultivando":
 						setBackground(Color.GREEN);
 						break;
@@ -208,6 +211,9 @@ public class Principal extends JFrame {
 					case "Minerando":
 						setBackground(Color.YELLOW);
 						break;
+					case "Destruida":
+						setBackground(Color.RED);
+						break;
 					default:
 						setBackground(Color.LIGHT_GRAY); 
 						break;
@@ -222,9 +228,6 @@ public class Principal extends JFrame {
 				switch (v) {							
 					case "Online":
 						setBackground(Color.GREEN);
-						break;
-					case "Jogando":
-						setBackground(Color.YELLOW);
 						break;
 					default:
 						setBackground(Color.LIGHT_GRAY); 
@@ -842,6 +845,9 @@ public class Principal extends JFrame {
 				try {
 					Comandos.comandoIniciarVila();
 					Comandos.app.enviarMensagem("/Jogar");
+					for (int i = 0; i < Principal.tmJogos.getRowCount(); i++) {
+						Comandos.app.enviarMensagem("/AddJogador "+Principal.tmJogos.getValueAt(i,0));
+					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -856,7 +862,7 @@ public class Principal extends JFrame {
 		
 		btnEncerrarJogo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Encerrar Jogo");
+				
 			}
 		});
 		
@@ -944,7 +950,7 @@ public class Principal extends JFrame {
 
 		btnTemploLancar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Comandos.comandoTemploLancar();
+				Comandos.comandoTemploLancar(Principal.cbTemploLancamentos.getSelectedItem().toString(),Principal.cbTemploInimigo.getSelectedItem().toString());
 			}
 		});
 

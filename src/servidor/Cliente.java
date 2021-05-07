@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import main.Comandos;
 import main.Principal;
@@ -70,7 +71,24 @@ public class Cliente extends Thread{
 						Principal.texto.append("Servidor caiu! \r\n");
 					}else if(msg.endsWith("/Jogar")) {
 						Comandos.comandoIniciarVila();
-					}else {
+					}else if(msg.indexOf("/AddJogador")>0) {//Add jogador na lista de attack
+						if(!msg.substring(msg.indexOf("/AddJogador")+"/AddJogador ".length(),msg.length()).equals(Principal.pnNomeUsuario.getText())) {//Não add o mesmo jogador a sua propria lista
+							Principal.cbTemploInimigo.addItem(msg.substring(msg.indexOf("/AddJogador")+"/AddJogador ".length(),msg.length()));
+						}
+					}else if(msg.indexOf("/attack")>0){
+						ArrayList<Integer> ponteiros = new ArrayList<Integer>();
+				        for (int i = 0; i < msg.length(); i++) {
+				            char temp = msg.charAt(i);
+				            if (temp == ' ') {
+				            	ponteiros.add(i+1);
+				            }
+				        }
+				        if(Principal.pnNomeUsuario.getText().equals(msg.substring(ponteiros.get(2),ponteiros.get(3)-1))){
+				        	String attack = msg.substring(ponteiros.get(3),msg.length()-2);
+				        	int nivel = Integer.parseInt(msg.substring(msg.length()-1,msg.length()));
+				        	Comandos.comandoReceberAttack(attack,nivel);
+				        }
+					}else  {
 						Principal.texto.append(msg+"\r\n");
 						Principal.textoVila.append(msg+"\r\n");
 					}

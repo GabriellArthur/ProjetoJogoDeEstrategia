@@ -26,9 +26,7 @@ public class Fazenda implements Runnable {
 		try {
 			Thread.sleep(Tempo.tempoDeCriacaoDaFazenda);
 			Mostrar.mostrarFazenda(fazenda, "Disponivel");
-			Mostrar.mostrarAldeao(aldeao, "Pronto");
-			
-			Comandos.Aldeoes.remove(Comandos.Aldeoes.indexOf(Comandos.comandoAldeaoConstruirFazenda));//Remove da lista de trabalhadores, por que ele temrinou
+			Comandos.comandoAldeaoParar(Comandos.comandoAldeaoConstruirFazenda);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

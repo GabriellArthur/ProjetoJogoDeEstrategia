@@ -87,7 +87,7 @@ public class EvolucoesTemplo implements Runnable{
 			if(fe>=1500) {
 				fe = fe - 1500;
 				Mostrar.desabilitarOpcaoEvoluir();
-				//------------------------//
+				//------------------------/
 				int porcentagem = 0;
 				while(porcentagem!=100) {
 					try {
