@@ -66,7 +66,7 @@ public class EvolucoesPrefeitura implements Runnable{
 					Mostrar.mostrarComida(comida);
 					Mostrar.mostrarOuro(ouro);
 					Comandos.evolucoesPrefeitura.evoluirAldeao();
-					Mostrar.mostrarPrefeitura("Aldeões Evoluidos", Color.RED);
+					Mostrar.mostrarPrefeitura("Aldeoes Evoluidos", Color.RED);
 					//------------------------//Percorre toda a lista mudando o status para "pronto"
 					for (int i = 1; i <= Principal.tmAldeoes.getRowCount(); i++) {
 						Mostrar.mostrarAldeao(i, "Pronto");
@@ -82,7 +82,7 @@ public class EvolucoesPrefeitura implements Runnable{
 				View.exibirMensagemErro("Error", "Falta Comida");
 			}
 		}else {
-			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+			View.exibirMensagemErro("Error", "Evolucao ja esta no maximo");
 		}
 	}
 	
@@ -137,7 +137,7 @@ public class EvolucoesPrefeitura implements Runnable{
 				View.exibirMensagemErro("Error", "Falta Comida");
 			}
 		}else {
-			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+			View.exibirMensagemErro("Error", "Evolucao ja esta no maximo");
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class EvolucoesPrefeitura implements Runnable{
 				View.exibirMensagemErro("Error", "Falta Comida");
 			}
 		}else {
-			View.exibirMensagemErro("Error", "Evolução já está no maximo");
+			View.exibirMensagemErro("Error", "Evolucao ja esta no maximo");
 		}
 	}
 	

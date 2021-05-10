@@ -14,8 +14,8 @@ public class IniciarVila {
 		}
 		Mostrar.adicionarFazenda("1", "Disponivel"); //1 Fazenda
 		Mostrar.adicionarMinaOuro("1", "Disponivel");//1 Mina
-		Mostrar.mostrarComida(15000);//150 Comida
-		Mostrar.mostrarOuro(50000);//500 Ouro
+		Mostrar.mostrarComida(150);//150 Comida
+		Mostrar.mostrarOuro(500);//500 Ouro
 		Mostrar.mostrarPrefeitura("Prefeitura", Color.ORANGE);
 		Mostrar.desabilitarhabilitarTemplo();//Habilitado assim que é construido e inicia com 0 de fé
 		Mostrar.habilitarMaravilha();// 0 maravilha
