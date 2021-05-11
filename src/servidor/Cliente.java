@@ -106,6 +106,8 @@ public class Cliente extends Thread {
       ouw.close();
       ou.close();
       socket.close();
+      Principal.texto.append("Saiu...\r\n");
+      Comandos.comandoEncerrarVila();
    }
 
 }

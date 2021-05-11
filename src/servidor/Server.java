@@ -23,11 +23,11 @@ public class Server extends Thread {
 	Server(Socket con){
 	   this.con = con;
 	   try {
-	         in  = con.getInputStream();
-	         inr = new InputStreamReader(in);
-	          bfr = new BufferedReader(inr);
+         in  = con.getInputStream();
+         inr = new InputStreamReader(in);
+         bfr = new BufferedReader(inr);
 	   } catch (IOException e) {
-	          e.printStackTrace();
+          e.printStackTrace();
 	   }
 	}
 	

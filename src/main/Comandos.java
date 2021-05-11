@@ -557,12 +557,12 @@ public class Comandos {
 
    public static void conectarJogo(String server, String porta) {
       try {
-         app = new Cliente(server, porta, Principal.pnNomeUsuario.getText(),
-               Principal.pnCivilizacoes.getSelectedItem().toString());
+         app = new Cliente(server, porta, Principal.pnNomeUsuario.getText(),Principal.pnCivilizacoes.getSelectedItem().toString());
          app.conectar();
          app.start();
          Principal.texto.append("Voce se conectou...\n");
       } catch (IOException e) {
+    	 View.exibirMensagemErro("ERROR", "Error na hora de se connectar, informa o ip:porta correta");
          e.printStackTrace();
       }
    }
