@@ -134,7 +134,7 @@ public class Principal extends JFrame {
 	static JPanel pnMaravilha;
 	static JLabel lblMaravilha;
 	static JProgressBar pbMaravilha;
-	private static JTextField lbl_portaConectar;
+	public static JTextField lbl_portaConectar;
 	
 
 	public static void main(String[] args) {
@@ -863,7 +863,8 @@ public class Principal extends JFrame {
 		btnEncerrarJogo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Comandos.app.sair();
+					Comandos.app.enviarMensagem("/Encerrar");
+					Comandos.comandoEncerrarVila();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

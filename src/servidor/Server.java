@@ -40,7 +40,6 @@ public class Server extends Thread {
 	    BufferedWriter bfw = new BufferedWriter(ouw);
 	    Principal.clientes.add(bfw);
 	    nome = msg = bfr.readLine();
-	    
 		if(Principal.tmJogos.getValueAt(0,0).equals(Principal.pnNomeUsuario.getText())) { //Add um novo usuario a lista
 			if(!Principal.tmJogos.getValueAt(Principal.tmJogos.getRowCount()-1,0).equals(msg.substring(0,msg.indexOf("[")))) {
 				Mostrar.adicionarSave(msg.substring(0,msg.indexOf("[")), msg.substring(msg.indexOf("[")+1, msg.indexOf("]")), Inet4Address.getLocalHost().getHostAddress()+":"+Principal.pnPorta.getText(), "Online");
@@ -48,15 +47,12 @@ public class Server extends Thread {
 				Principal.cbTemploInimigo.addItem(msg.substring(0,msg.indexOf("[")));
 			}
 		}
-		
-		while(!"Sair".equalsIgnoreCase(msg) && msg != null){
+		while(msg != null){
 	       msg = bfr.readLine();
 	       sendToAll(bfw, msg);
 	    }
-	
 	   }catch (Exception e) {
 	     e.printStackTrace();
-	
 	   }
 	}
 	private void sendToAll(BufferedWriter bwSaida, String msg) throws  IOException{
